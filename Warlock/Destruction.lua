@@ -3,6 +3,11 @@
 -- Created on Nov 13th 2013 6:18 am
 ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 
+--Trinkets
+{ "#gloves" },
+{ "#trinket1" },
+{ "#trinket2" },
+
 { "Shadowburn", { "target.health <= 20", "!target.debuff(Shadowburn)", "player.embers >= 10", "!modifier.last(Shadowburn)", }},
 --Rein of fire
 { "Rain of Fire", "modifier.shift", "ground" },
@@ -12,12 +17,14 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
   { "Summon Terrorguard",{ "modifier.control", "modifier.cooldowns", "!modifier.multitarget" }},
   { "Summon Doomguard",{ "modifier.control", "modifier.cooldowns", "modifier.multitarget", }},
 
---{ "Curse of the Elements", "!target.debuff(Curse of the Elements)" },
-
+  --Pet Survival
+  { "Health Funnel", { "pet.exists", "pet.health < 40", }},
+  { "Flames of Xoroth", { "!pet.exists", "player.embers >= 10", }},
+  
 --Rotation Multi
 {{
 { "Fire and Brimstone", "player.embers >= 15" },
-{ "!/cancelaura Fire and Brimstone", "!modifier.multitarget" },
+{ "!/cancelaura Fire and Brimstone", { "!modifier.multitarget", "player.embers < 9", }},
 { "Havoc" },
 {{
 { "Conflagrate" , "player.embers >= 10" },
@@ -25,6 +32,7 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 { "Incenerate", "player.embers >= 15" },
 }, "player.buff(Fire and Brimstone)" },
 }, "modifier.multitarget" },
+
 
 --Rotation Single
 { "Immolate", { "target.debuff(Immolate).duration <= 4", "!modifier.last(Immolate)", }},
@@ -35,17 +43,13 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
     { "Chaos Bolt", "player.buff(Dark Soul: Instability)" },
     { "Chaos Bolt", "player.buff(Skull Banner)" },
   }, "target.health > 20" },
- -- { "Fel Flame", "player.moving" },
+{ "Conflagrate", { "player.embers < 7", "!player.buff(Backdraft)", }},
 { "Incinerate" },
-
 
 -- Out Of Combat
 },
 {
---Buffs
 { "Dark Intent", "!player.buff(Dark Intent)" },
 { "Rain of Fire", "modifier.shift", "ground" },
-  -- Out of COmbat
-},{
-  { "Dark Intent", "!player.buff" },wwwwwwwwww
+{ "Unending Breath", "!player.buff(Unending Breath)" },
 })
