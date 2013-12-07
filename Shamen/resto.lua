@@ -8,16 +8,16 @@ ProbablyEngine.rotation.register_custom(264, "RestoShamenKoha", {
  -- { "Unleash Elements", { "@coreHealing.needsHealing(99, 1)", "lowest", "modifier.shift", }},
   { "Healing Rain", "modifier.shift", "ground" },
 
-
+--Trinkets
+{ "#gloves" },
+{ "#trinket1" },
+{ "#trinket2" },
   -- buffs
   { "Earthliving Weapon", "!player.enchant.mainhand" },
   { "Water Shield", "!player.buff(Water Shield)" },
 
   -- tank
-  { "974", { "@mavmins.youreWelcome", "!focus.buff(974)", }},
- --{ "974", "!focus.buff(974)" },
- --{ "974", "focus.buff(974).count < 1" },
-  --{ "Riptide", "!tank.buff(Riptide)" },
+  { "Earth Shield", { "!focus.buff(Earth Shield)", "!focus.buff(Water Shield)", "target.role(tank)" }},
   { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
 
   -- healing totem
@@ -50,7 +50,7 @@ ProbablyEngine.rotation.register_custom(264, "RestoShamenKoha", {
   { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
   { "Chain Heal", "@coreHealing.needsHealing(90, 4)", "lowest" },
   { "Healing Wave", "@coreHealing.needsHealing(85, 1)", "lowest", },
-  { "Lightning Bolt", "player.mana < 60" },
+  { "Lightning Bolt", { "focus.exists", "player.mana < 60" }},
 
 },
 {
