@@ -1,18 +1,4 @@
--- SPEC ID 263
 
-ProbablyEngine.library.register('coreHealing', {
-  needsHealing = function(percent, count)
-    return ProbablyEngine.raid.needsHealing(tonumber(percent)) >= count
-  end,
-  needsDispelled = function(spell)
-    for unit,_ in pairs(ProbablyEngine.raid.roster) do
-      if UnitDebuff(unit, spell) then
-        ProbablyEngine.dsl.parsedTarget = unit
-        return true
-      end
-    end
-  end,
-})
 -- ProbablyEngine Rotation Packager
 -- Custom Resto Druid Rotation
 -- Created on Nov 2nd 2013 1:03 am
@@ -28,8 +14,9 @@ ProbablyEngine.rotation.register_custom(264, "RestoShamenKoha", {
   { "Water Shield", "!player.buff(Water Shield)" },
 
   -- tank
-  { "Earth Shield", "!focus.buff(Earth Shield).count < 1" },
-  { "Earth Shield", "!tank.buff(Earth Shield).count < 1" },
+  { "974", { "@mavmins.youreWelcome", "!focus.buff(974)", }},
+ --{ "974", "!focus.buff(974)" },
+ --{ "974", "focus.buff(974).count < 1" },
   --{ "Riptide", "!tank.buff(Riptide)" },
   { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
 
