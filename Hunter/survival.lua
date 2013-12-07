@@ -3,10 +3,11 @@
 -- Created on Nov 3rd 2013 10:24 pm
 ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 
+--Aspect Check
+{ "Aspect of the Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
+{ "Aspect of the Iron Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 
--- Stance Check
-	--{ "Aspect of the Iron Hawk", "!player.buff(Aspect of the Iron Hawk)" },
-	
+	--others
 	{ "Feign Death", "modifier.control" },
 	{ "pause", "modifier.control" },
 

@@ -3,14 +3,24 @@
 -- Created on Nov 16th 2013 10:44 pm
 ProbablyEngine.rotation.register_custom(253, "BMKoha", {
 
--- Stance Check
-	--{ "Aspect of the Iron Hawk", "!player.buff(Aspect of the Iron Hawk)" },
+
+--Aspect Check
+{ "Aspect of the Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
+{ "Aspect of the Iron Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 	
+	--other
 	{ "Feign Death", "modifier.control" },
 	{ "pause", "modifier.control" },
 
 -- Misdirect Test
 	{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
+	
+	--Auto Target Enemy 
+  { "!/targetenemy [noharm]", {
+    "!target.alive", 
+	"!target.enemy",
+	"!target.exists",
+  }},
 
 --Racial Cooldowns
 	{ "Berserking", "modifier.cooldowns" },
@@ -26,7 +36,8 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
 	{ "Freezing Trap" , "modifier.alt", "ground" },
 
 -- Interupts
-	{{{ "Counter Shot" },{ "Scatter Shot", "player.spell(Counter Shot).cooldown" }}, "modifier.interrupts" },
+	{ "Counter Shot", "modifier.interrupts" },
+	{ "Scatter Shot", { "player.range < 19", "modifier.interrupts" }},
 
 -- Survival
     { "Exhilaration", "player.health < 50" },
@@ -82,14 +93,11 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
 {
 --Buffs
 { "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
-{ "Aspect of the Hawk", {
-"player.spell(Aspect of the Hawk).exists",
-"!player.buff(Aspect of the Hawk)"
-}},
-{ "Aspect of the Iron Hawk", {
-"player.spell(Aspect of the Iron Hawk).exists",
-"!player.buff(Aspect of the Iron Hawk)"
-}},
+-- Pet Survival
+{ "Mend Pet", { "pet.health <= 80", "pet.exists", "!pet.buff(Mend Pet)" }},
+{ "Aspect of the Cheetah", { "!player.buff(Aspect of the Cheetah)", "player.moving" }},
+{ "Aspect of the Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
+{ "Aspect of the Iron Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 
 
 })
