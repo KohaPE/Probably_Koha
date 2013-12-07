@@ -8,6 +8,7 @@ Deathknight\frost2h.lua
 Deathknight\frostdw.lua
 Deathknight\unholy.lua
 Warlock\Demo.lua
+Warlock\Destruction.lua
 Hunter\BM.lua
 Hunter\survival.lua
 Druid\bear.lua
