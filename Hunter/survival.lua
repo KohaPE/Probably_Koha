@@ -11,8 +11,14 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 	{ "pause", "modifier.control" },
 
 -- Misdirect Test
-	--{ "!/cast [btn:1,@focus,nodead,exists][btn:2,@focus,nodead,exists] Misdirection; Misdirection", "modifier.shift" },
 	{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
+	
+	--Auto Target Enemy 
+  { "!/targetenemy [noharm]", {
+    "!target.alive", 
+	"!target.enemy",
+	"!target.exists",
+  }},
 
 --Racial Cooldowns
 	{ "Berserking", "modifier.cooldowns" },
@@ -28,7 +34,8 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 	{ "Freezing Trap" , "modifier.alt", "ground" },
 
 -- Interupts
-	{{{ "Counter Shot" },{ "Scatter Shot", "player.spell(Counter Shot).cooldown" }}, "modifier.interrupts" },
+	{ "Counter Shot", "modifier.interrupts" },
+	{ "Scatter Shot", { "player.range < 19", "modifier.interrupts" }},
 
 -- Survival
     { "Exhilaration", "player.health < 50" },
@@ -54,7 +61,7 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 
 
 --Shared Rotation
-{ "Kill Shot", "target.health <= 20" },
+{ "Kill Shot", { "target.health <= 20", "player.range <= 40" }},
     { "Explosive Shot", "player.buff(Lock and Load)" },
     { "Fervor", {
       "player.focus < 50",
@@ -75,9 +82,9 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 }},
 
 -- Single Target
-{ "Arcane Shot", "player.focus > 80" },
+{ "Arcane Shot", "player.focus > 70" },
 { "Explosive Shot", "player.focus >= 45" },
-{ "Serpent Sting", "!target.debuff(Serpent Sting)" },
+{ "Serpent Sting", { "!modifier.last(Serpent Sting)", "!target.debuff(Serpent Sting)" }},
 { "Black Arrow", "!target.debuff(Black Arrow)" },
 { "Arcane Shot", {
  "player.focus > 60",
@@ -93,14 +100,11 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 {
 --Buffs
 { "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
-{ "Aspect of the Hawk", {
-"player.spell(Aspect of the Hawk).exists",
-"!player.buff(Aspect of the Hawk)"
-}},
-{ "Aspect of the Iron Hawk", {
-"player.spell(Aspect of the Iron Hawk).exists",
-"!player.buff(Aspect of the Iron Hawk)"
-}},
+-- Pet Survival
+{ "Mend Pet", { "pet.health <= 80", "pet.exists", "!pet.buff(Mend Pet)" }},
+{ "Aspect of the Cheetah", { "!player.buff(Aspect of the Cheetah)", "player.moving" }},
+{ "Aspect of the Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
+{ "Aspect of the Iron Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 
 
 })
