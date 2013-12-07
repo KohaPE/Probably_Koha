@@ -1,0 +1,21 @@
+## Interface: 50400
+## Title: Probably - Kohas Rotations
+## Notes: ProbablyEngine Custom Death Knight
+## Dependencies: Probably
+lib.lua
+Deathknight\blood.lua
+Deathknight\frost2h.lua
+Deathknight\frostdw.lua
+Deathknight\unholy.lua
+Warlock\Demo.lua
+Hunter\BM.lua
+Hunter\survival.lua
+Druid\bear.lua
+Druid\restotree.lua
+Shamen\resto.lua
+Monk\brewmaster.lua
+Monk\WW.lua
+Monk\LW.lua
+Warrior\arms.lua
+Warrior\fury.lua
+Warrior\prot.lua
