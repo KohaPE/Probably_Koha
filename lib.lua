@@ -245,12 +245,3 @@ ProbablyEngine.library.register('mistweaver', {
     return false
   end,
 })
-function mavmins.youreWelcome()
-		
-		if UnitExists("focus")
-			and IsPlayerSpell(974) == true
-			and IsSpellInRange(GetSpellInfo(974),"focus") == 1 then
-				return true
-		end
-		
-end
