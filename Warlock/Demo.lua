@@ -37,7 +37,6 @@ ProbablyEngine.rotation.register_custom(266, "DemonicKoha", {
 -- Out Of Combat
 },
 {
---Buffs
 { "Dark Intent", "!player.buff(Dark Intent)" },
 { "Summon Wrathguard", "!pet.alive" },
 { "!/cancelaura Metamorphosis" },
