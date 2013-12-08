@@ -4,130 +4,125 @@
 -- Created on Nov 1st 2013 11:11 pm
 ProbablyEngine.rotation.register_custom(251, "Frost2HKoha", {
 
---Pause
-{ "pause", "modifier.control" },
 --Presence Checks
-	{ "Frost Presence", "!player.buff(Frost Presence)" },
---Trinkets
+	{ "48266", "!player.buff(48266)" }, --Frost Presence
+
+--Trinket Procs
 { "#gloves" },
-	{ "#trinket1", "player.buff(Unholy Strength)" },
-	{ "#trinket2", "player.buff(Unholy Strength)" },
-	{ "Pillar of Frost", "player.buff(Unholy Strength)" },
+	{ "#trinket1", "player.buff(53365)" }, --trinket on Unholy Strength
+	{ "#trinket2", "player.buff(53365)" },
+	
+	--Auto Target Enemy 
+  { "!/targetenemy [noharm]", {
+    "!target.alive", 
+	"!target.enemy",
+	"!target.exists",
+  }},
+
 --Racial Cooldowns
-	{ "Berserking", "modifier.cooldowns" }, --Berserking
-	{ "Blood Fury", "modifier.cooldowns" }, --Blood Fury
-		{ "Pestilence", {
-	"modifier.alt",
-	"target.debuff(Blood Plague)",
-	"target.debuff(Frost Fever)", 
-	}},
+	{ "26297", { "player.spell(26297).exists", "modifier.cooldowns" }}, --Berserking
+	{ "20572", { "player.spell(20572).exists", "modifier.cooldowns" }}, --Blood Fury
 
 --Cooldowns
-	{ "Pillar of Frost", "modifier.cooldowns" },
-	{ "Raise Dead", "modifier.cooldowns" },
-	{ "Empower Rune Weapon", { 
+	{ "51271", "modifier.cooldowns" }, --pillar of frost
+	{ "46584", "modifier.cooldowns" }, --Raise Dead
+	{ "47568", { --Empower Rune Weapon
 	"modifier.cooldowns", 
 	"player.runicpower <= 25", 
 	"player.runes(death).count = 0", 
 	"player.runes(frost).count = 0", 
 	"player.runes(unholy).count = 0" 
 	}}, 
--- Auto Boss Cooldowns
-{{
-{ "Pillar of Frost", "player.buff(Unholy Strength)" },
-{ "Berserking" },
-{ "Blood Fury" },
-{ "Army of the Dead" },
-	{ "Raise Dead" },
-	{ "Empower Rune Weapon", { 
-	"modifier.cooldowns", 
-	"player.runicpower <= 25", 
-	"player.runes(death).count = 0", 
-	"player.runes(frost).count = 0", 
-	"player.runes(unholy).count = 0" 
-	}}, 
-	}, "target.boss" },
 
 
 -- hard cast dnd
-	{ "Death and Decay", "modifier.shift", "ground" },
+	{ "43265", "modifier.shift", "ground" }, --DeathandDecay
 
 
 --Interupts
-	{ "Mind Freeze", "modifier.interrupts" },
-	{ "Asphyxiate", "modifier.interrupts" },
+	{ "47528", "modifier.interrupts" },  --MindFreeze
+	{ "108194", { "player.spell(108194).exists", "modifier.interrupts" }}, --Asphyxiate
 	
 -- Survival
-	{ "Anti-Magic Shell", "player.health < 70" },
-	{ "Death Strike", "player.health < 50" },
-	{ "Death Siphon", "player.health < 55" },
-	{ "Icebound Fortitude", "player.health < 30" },
+	{ "48707", "player.health < 70" }, --Anti-Magic Shell
+	{ "49998", "player.health < 50" }, --Death Strike
+	{ "108196", "player.health < 80" }, --Death Siphon
+	{ "48792", "player.health < 30" }, --Icebound Foritude1
 -- Death Pact Macro
-	{ "!/cast Raise Dead\n/cast Death Pact", {
+	{ "!/cast 46584\n/cast 48792", {
       "player.health < 35",
-      "player.spell.cooldown(Death Pact)",
-      "player.spell.cooldown(Raise Dead)",
-      "player.spell.usable(Death Pact)"
+      "player.spell.cooldown(48792)",
+      "player.spell.cooldown(46584)",
+      "player.spell.usable(48792)"
 	}},
 
-
 --Dots Tracking
-	{ "Outbreak", "!target.debuff(Frost Fever)" },
-	{ "Outbreak", "!target.debuff(Blood Plague)" },
-	{ "Plague Strike", {
-	"!target.debuff(Blood Plague)",
-	"target.debuff(Blood Plague).duration <= 3",
+	{ "77575", "!target.debuff(59921)" }, --Outbreak Frost
+	{ "77575", "!target.debuff(59879)" }, --Outbreak Blood
+	{ "45462", { --Plague Strike
+	"!target.debuff(59879)",
+	"target.debuff(59879).duration <= 3",
 	"player.runes(Unholy).count >= 1",
 	}},
 	
+	
 -- Refresh dots with hard casts
-	{ "Howling Blast", "!target.debuff(Frost Fever)" },
-	{ "Plague Strike", "!target.debuff(Blood Plague)" },
+	{ "49184", "!target.debuff(59921)" }, --Howling Blast
+	{ "45462", "!target.debuff(59879)" }, --Plague Strike
 
---Rotation
-  --Plauge Leech Support
-	{ "Plague Leech", {
-	"target.debuff(Frost Fever)",
-	"target.debuff(Blood Plague).duration < 15",
+	--Rotation
+	--Plauge Leech Support
+	{ "123693", { --PlagueL3ech1
+	"player.spell(123693).exists",
+	"target.debuff(59921)",
+	"target.debuff(59879).duration < 10",
 	"player.rune(Unholy).count <= 1",
 	"player.rune(Frost).count <= 1",
-	"player.buff(Freezing Fog)",
+	"player.buff(59052)",
 	}},
---AOE
-	{ "Unholy Blight", {
-	"player.spell(Unholy Blight).usable",
+	
+	
+	--AOE
+	{ "51842", { --Pe5tilence1
+	"modifier.alt",
+	"target.debuff(59879)",
+	"target.debuff(59921)", 
+	}},
+	{ "115989", { --Unh0lyBlight1
+	"player.spell(115989).exists",
 	"modifier.multitarget",
 	"target.range <= 8",
 	}},
-	{ "Howling Blast", "modifier.multitarget" },
-	{ "Plague Strike", {
+	{ "49143", "player.runicpower > 80" }, -- Frost Strike cap
+	{ "49184", "modifier.multitarget" }, --Howling Blast
+	{ "45462", { --Plague Strike
 	"modifier.multitarget",
 	"player.runes(Unholy).count = 2", 
 	}},
-	{ "Blood Tap", "player.buff(Blood Charge).count >= 5" },
-	{ "Frost Strike", "modifier.multitarget" },
+	{ "45529", "player.buff(114851).count >= 5" }, --Blood Tap
+	{ "49143", "modifier.multitarget" }, --Frost Strike
 
 --Single
-{ "Obliterate", { "player.runes(Frost).count >= 1", "player.runes(Death).count >= 1", }},
-	{ "Obliterate", "player.runes(Death).count >= 2" },
-	{ "Frost Strike", "player.runicpower > 70" },
-{ "Soul Reaper", "target.health < 30" },
-   { "Howling Blast", "player.buff(Freezing Fog)" },
-    { "Howling Blast", "player.buff(Rime)" },
-    { "Obliterate", "player.buff(Killing Machine)" },
-    { "Obliterate" },
-    { "Horn of Winter" },
-    { "Frost Strike" },
-    { "Blood Tap", "player.buff(Blood Charge).count >= 5" },
-    { "Horn of Winter" },
+{ "49020", { "player.runes(Frost).count >= 1", "player.runes(Death).count >= 1", }}, --Obliterate
+	{ "49020", "player.runes(Death).count >= 2" }, --Obliterate
+	{ "49143", "player.runicpower > 70" }, --Frost Strike
+{ "130735", "target.health < 30" }, --Soul Reaper
+   { "49184", "player.buff(59052)" }, --Howling Blast
+    { "49184", "player.buff(59057)" }, --Howling Blast
+    { "49020", "player.buff(51128)" }, --Obliterate
+    { "49020" }, --Obliterate
+    { "57330" }, --Horn of Winter
+    { "49143" }, --Frost Strike
+    { "45529", "player.buff(114851).count >= 5" }, --Blood Tap
+    { "57330" }, --Horn of Winter
     
 -- Out Of Combat
 },
 {
 --Presence Checks
-{ "Unholy Presence", "player.moving" },
-{ "Army of the Dead", "modifier.alt" },
-{ "Death and Decay", "modifier.shift", "ground" },
+{ "48265", "player.moving" }, --Unholy Presence
+{ "42650", "modifier.alt" }, --Army of the Dead
+{ "43265", "modifier.shift", "ground" }, --Death and Decay
 
   }
 )

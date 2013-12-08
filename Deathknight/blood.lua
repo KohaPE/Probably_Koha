@@ -6,16 +6,23 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 
 --Trinket Procs
 { "#gloves" },
-	{ "#trinket1", "player.buff(Unholy Strength)" },
-	{ "#trinket2", "player.buff(Unholy Strength)" },
+	{ "#trinket1" },
+	{ "#trinket2" },
+
+	--Auto Target Enemy 
+  { "!/targetenemy [noharm]", {
+    "!target.alive", 
+	"!target.enemy",
+	"!target.exists",
+  }},
 
 --Racial Cooldowns
-	{ "Berserking", "modifier.cooldowns" },
-	{ "Blood Fury", "modifier.cooldowns" },
+	{ "26297", { "player.spell(26297).exists", "modifier.cooldowns" }}, --Berserking
+	{ "20572", { "player.spell(20572).exists", "modifier.cooldowns" }}, --Blood Fury
 
 --Cooldowns
-	{ "Raise Dead", "modifier.cooldowns" },
-	{ "Empower Rune Weapon", { 
+	{ "46584", "modifier.cooldowns" }, --Raise Dead
+	{ "47568", { --Empower Rune Weapon
 	"modifier.cooldowns", 
 	"player.runicpower <= 25", 
 	"player.runes(death).count = 0", 
@@ -24,95 +31,90 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 	}}, 
 
 -- hard cast dnd
-  	{ "Death and Decay", "modifier.shift", "ground" },
-  		{ "Blood Boil", "modifier.alt" },
-  		{ "Death Strike", "player.buff(Sent of Blood).count = 5" },
+  	{ "43265", "modifier.shift", "ground" }, --Death n Decay
+   { "48721", "modifier.alt" }, --Blood Boil
 
 --Interupts
-	{ "Mind Freeze", "modifier.interrupts" },
-	{ "Asphyxiate", "modifier.interrupts" },
+	{ "47528", "modifier.interrupts" },  --MindFreeze
+	{ "108194", { "player.spell(108194).exists", "modifier.interrupts" }}, --Asphyxiate
 
 -- Survival
-  	{ "Anti-Magic Shell", "player.health < 70" },
-	{ "Death Strike", "player.health < 50" },
-  	{ "Dancing Rune Weapon", "player.health < 60" },
-  	{ "Death Siphon", "player.health < 40" },
-	{ "Conversion", "player.health < 40" },
-  	{ "Vampiric Blood", "player.health < 55" },
-  	{ "Icebound Fortitude", "player.health < 50" },
-  	{ "Rune Tap", "player.health < 40" },
-  	{ "Empower Rune Weapon", "player.health < 40" },
+  	{ "48707", "player.health < 70" }, --Anti-Magic Shell
+	{ "49998", "player.health < 50" }, --Death Strike
+  	{ "49028", "player.health < 60" }, --Dancing Rune
+  	{ "108196", "player.health < 40" }, --Death Siphon
+	{ "119975", "player.health < 40" }, --Conversion
+  	{ "55233", "player.health < 55" }, --Vampiric Blood
+  	{ "48792", "player.health < 50" }, --IceboundFort
+  	{ "48982", "player.health < 40" }, --RuneTap
+  	{ "47568", "player.health < 40" }, --ERW
 
--- Death Pact Macro
-  	{ "!/cast Raise Dead\n/cast Death Pact", {
+-- 48792 Macro
+  	{ "!/cast 46584\n/cast 48792", { --Deathpact Macro
 	"player.health < 35",
-	"player.spell.cooldown(Death Pact)",
-	"player.spell.cooldown(Raise Dead)",
-	"player.spell.usable(Death Pact)"
+	"player.spell.cooldown(48792)",
+	"player.spell.cooldown(46584)",
+	"player.spell.usable(48792)"
 	}},
 
 --Dots Tracking
-	{ "Outbreak", {
-	"!target.debuff(Blood Plague)",
-	"target.health >= 50",
-	}},
-	{ "Outbreak", {
-	"!target.debuff(Frost Fever)",
-	"target.health >= 50",
-	}},
-
--- Refresh dots with hard casts
-	{ "Icy Touch", "target.debuff(Frost Fever).duration < 4" 	},
+	{ "Outbreak", "!target.debuff(Frost Fever)" },
+	{ "Blood Boil", {
+	  "target.range <= 8",
+	  "target.debuff(Frost Fever).duration < 4" }},
+	{ "Icy Touch", "target.debuff(Frost Fever).duration < 4" },
 	{ "Plague Strike", "target.debuff(Blood Plague).duration < 4" },
+	{ "Icy Touch", "!target.debuff(Frost Fever)" },
+	{ "Plague Strike", "!target.debuff(Blood Plague)" },
 
 -- Refresh dots with Blood Boil
-	{ "Blood Boil", {
+	{ "48721", {
 	"target.debuff(Frost Fever)",
 	"target.debuff(Blood Plague)",
 	"target.debuff(Frost Fever).duration < 10",
 	"target.debuff(Blood Plague).duration < 10",
 	}},
-	{ "Blood Boil", {
+	{ "48721", { 
 	"modifier.multitarget",
-	"player.buff(Crimson Scourge)",
+	"player.buff(81141)",
 	}},
 
 -- defensive
-  	{ "Bone Shield", "!player.buff" },
+  	{ "49222", "!player.buff" }, --Bone Shield
 
 -- Taunts
-  	{ "Dark Command", "modifier.taunt" },
-  	{ "Death Grip", "modifier.taunt" },
-  	{ "Soul Reaper", "target.health < 35" },
+  	{ "56222", "modifier.taunt" }, --Dark Command
+  	{ "49576", "modifier.taunt" }, --Death Grip
+  	{ "114866", "target.health < 35" }, --Soul Reaper
 
 --Rotation AOE
-	{ "Death Strike" },
-	{ "Blood Boil", {
+	{ "49998" }, --Death Strike
+	{ "48721", { --Bloodboil
 	"modifier.multitarget",
 	"player.runes(blood).count >= 1",
-	"target.range <= 5",
+	"target.range <= 8",
 	"target.debuff(Frost Fever)",
 	"target.debuff(Blood Plague)",
 	}},
 	
 
 -- Rotation Single Target
-	{ "Heart Strike", { "player.runes(blood).count >= 1", "!modifier.multitarget", }},
-	{ "Death Strike" },
-	{ "Blood Boil", {
-	"player.buff(Crimson Scourge)",
+	{ "55050", { "player.runes(blood).count >= 1", "!modifier.multitarget", }}, --Heart Strike
+	{ "49998" }, --Death Strike
+	{ "48721", { --Blood Boil
+	"player.buff(81141)",
 	"target.range <= 5"
 	}},
-	{ "Soul Reaper", "target.health < 35" },
-	{ "Rune Strike" },
-	{ "Blood Tap", "player.buff(Blood Charge).count >= 5" },
-	{ "Horn of Winter" },
+	{ "114866", "target.health < 35" }, --Soul Reaper
+	{ "56815" }, --Rune Strike
+	{ "45529", "player.buff(114851).count >= 5" }, --BloodTap
+	{ "57330" }, --Horn of Winter
 -- Out Of Combat
 },
 {
 --Presence Checks
-{ "Blood Presence", "!player.buff(Blood Presence)" },
-{ "Bone Shield", "!player.buff" },
-{ "Army of the Dead", "modifier.alt" },
-{ "Death and Decay", "modifier.shift", "ground" },
+{ "48263", "!player.buff(48263)" }, --Blood Presence
+{ "49222", "!player.buff" }, --Bone Shield
+{ "42650", "modifier.alt" }, --Army of the Dead
+{ "43265", "modifier.shift", "ground" }, --Death and Decay
 })

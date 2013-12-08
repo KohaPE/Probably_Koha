@@ -95,7 +95,7 @@ ProbablyEngine.rotation.register_custom(251, "FrostDWkoha", {
 	"target.range <= 8",
 	}},
 	{ "49184", "modifier.multitarget" }, --H0wlingBlast
-	{ "45462", { --H0wlingBlast
+	{ "45462", { --Plague Strike
 	"modifier.multitarget",
 	"player.runes(Unholy).count = 2", 
 	}},
