@@ -4,22 +4,30 @@
 ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 
 --Presence Checks
-	{ "Unholy Presence", "!player.buff(Unholy Presence)" },
+	{ "48265", "!player.buff(48265)" }, --Unholy Presence
 
+--Trinket Procs
 { "#gloves" },
-	{ "#trinket1", "player.buff(Unholy Strength)" },
-	{ "#trinket2", "player.buff(Unholy Strength)" },
-
---Pet
-	{ "Raise Dead", "!pet.exists" },
+	{ "#trinket1", "player.buff(53365)" }, --trinket on Unholy Strength
+	{ "#trinket2", "player.buff(53365)" },
+	
+	--Auto Target Enemy 
+  { "!/targetenemy [noharm]", {
+	"target.range < 8",
+    "!target.alive", 
+	"!target.enemy",
+	"!target.exists",
+  }},
 
 --Racial Cooldowns
-	{ "Berserking", "modifier.cooldowns" },
-	{ "Blood Fury", "modifier.cooldowns" },
+	{ "26297", { "player.spell(26297).exists", "modifier.cooldowns" }}, --Berserking
+	{ "20572", { "player.spell(20572).exists", "modifier.cooldowns" }}, --Blood Fury
+--Pet
+	{ "46584", "!pet.exists" }, --raise ghoul
 
 -- Cooldowns
-  	{ "Unholy Frenzy", "modifier.cooldowns" },
-  	{ "Summon Gargoyle", "modifier.cooldowns" },
+  	{ "49016", "modifier.cooldowns" }, --unholy frenzy
+  	{ "49206", "modifier.cooldowns" }, --Summon Gargoye
 	{ "Empower Rune Weapon", { 
 	"modifier.cooldowns", 
 	"player.runicpower <= 25", 
@@ -29,34 +37,28 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 	}}, 
 
 -- hard cast dnd
-  	{ "Death and Decay", "modifier.shift", "ground" },
+  	{ "43265", "modifier.shift", "ground" }, --Death and Decay
 
 --Interupts
-	{ "Mind Freeze", "modifier.interrupts" },
-	{ "Asphyxiate", "modifier.interrupts" },
+	{ "47528", "modifier.interrupts" },  --MindFreeze
+	{ "108194", { "player.spell(108194).exists", "modifier.interrupts" }}, --Asphyxiate
 
-  -- Survival
-  	{ "Death Pact", "player.health < 20" },
-  	{ "Icebound Fortitude", "player.health < 50" },
-  	{ "Anti-Magic Shell", "player.health < 70" },
-	{ "Death Strike", "player.health < 50" },
-  	{ "Dancing Rune Weapon", "player.health < 60" },
-  	{ "Death Siphon", "player.health < 40" },
-	{ "Conversion", "player.health < 40" },
-  	{ "Vampiric Blood", "player.health < 55" },
-  	{ "Icebound Fortitude", "player.health < 50" },
-  	{ "Rune Tap", "player.health < 40" },
-  	{ "Empower Rune Weapon", "player.health < 40" },
+ -- Survival
+	{ "48707", "player.health < 70" }, --Anti-Magic Shell
+	{ "49998", "player.health < 50" }, --Death Strike
+	{ "108196", "player.health < 80" }, --Death Siphon
+	{ "48792", "player.health < 30" }, --Icebound Foritude1
 
   --Dots Tracking
-	{ "Outbreak", {
+	{ "77575", {
 	"!target.debuff(Frost Fever)",
 	}},
 
 -- Refresh dots with hard casts
-	{ "Plague Strike", "target.debuff(Blood Plague).duration < 4" },
+	{ "45462", "target.debuff(Blood Plague).duration < 4" },
  --Plauge Leech Support
-	{ "Plague Leech", {
+	{ "123693", {
+	"player.spell(123693).exists",
 	"target.debuff(Frost Fever)",
 	"target.debuff(Blood Plague).duration < 7",
 	"player.rune(Unholy).count <= 1",
@@ -65,8 +67,8 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 
 --AOE
 {{
-{ "Unholy Blight", {
-	"player.spell(Unholy Blight).usable",
+{ "115989", {
+	"player.spell(115989).exists",
 	"target.range <= 8",
 	}},
 { "Blood Boil", {
@@ -87,16 +89,16 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 	"player.runes(frost).count >= 1",
 	}},
 { "Scourge Strike" },
-{ "Blood Tap", "player.buff(Blood Charge).count >= 5" },
-{ "Horn of Winter" },
+{ "45529", "player.buff(114851).count >= 5" },
+{ "57330" },
 
 -- Out Of Combat
 },
 {
 --Presence Checks
-{ "Unholy Presence", "!player.buff(Unholy Presence)" },
-{ "Army of the Dead", "modifier.alt" },
-{ "Death and Decay", "modifier.shift", "ground" },
+{ "48265", "!player.buff(48265)" },
+{ "42650", "modifier.alt" },
+{ "59057", "modifier.shift", "ground" },
 
   }
 )
