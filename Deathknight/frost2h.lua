@@ -14,6 +14,7 @@ ProbablyEngine.rotation.register_custom(251, "Frost2HKoha", {
 	
 	--Auto Target Enemy 
   { "!/targetenemy [noharm]", {
+	"target.range < 8",
     "!target.alive", 
 	"!target.enemy",
 	"!target.exists",
