@@ -32,7 +32,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 
 -- hard cast dnd
   	{ "43265", "modifier.shift", "ground" }, --Death n Decay
-   { "48721", "modifier.alt" }, --Blood Boil
+{ "48721", "modifier.alt" }, --Blood Boil
 
 --Interupts
 	{ "47528", "modifier.interrupts" },  --MindFreeze
