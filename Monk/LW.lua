@@ -22,7 +22,7 @@ ProbablyEngine.rotation.register_custom(270, "Koha's Mist", {
   { 'Life Cocoon', { 'modifier.cooldowns', 'tank.health < 10' }, 'tank' },
 
 -- Mana
-{ "Mana Tea", { "player.buff(Mana Tea).count >= 12", "player.mana > 10", }},
+{ "Mana Tea", { "player.gly​ph(123763).e​xists", "player.buf​f(Mana Tea).count >= 12", "player.man​a > 10", }},
 { "Mana Tea", "player.mana < 10" },
 
 
