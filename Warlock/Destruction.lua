@@ -8,7 +8,7 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 { "#trinket1" },
 { "#trinket2" },
 
-{ "Shadowburn", { "target.health <= 20", "!target.debuff(Shadowburn)", "player.embers >= 10", "!modifier.last(Shadowburn)", }},
+{ "Shadowburn", { "target.health <= 20", "!modifier.last(Shadowburn)", "!target.debuff(Shadowburn)" }},
 --Rein of fire
 { "Rain of Fire", "modifier.shift", "ground" },
 
@@ -18,7 +18,6 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
   { "Summon Doomguard",{ "modifier.control", "modifier.cooldowns", "modifier.multitarget", }},
 
   --Pet Survival
-  { "Health Funnel", { "pet.exists", "pet.health < 40", }},
   { "Flames of Xoroth", { "!pet.exists", "player.embers >= 10", }},
   
 --Rotation Multi
