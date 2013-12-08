@@ -15,14 +15,36 @@ ProbablyEngine.rotation.register_custom(264, "RestoShamenKoha", {
   -- buffs
   { "Earthliving Weapon", "!player.enchant.mainhand" },
   { "Water Shield", "!player.buff(Water Shield)" },
+  
+  --Auto Target Enemy 
+  { "!/targetenemy [noharm]", {
+    "!target.alive", 
+	"!target.enemy",
+	"!target.exists",
+  }},
 
   -- tank
-  { "Earth Shield", { "!focus.buff(Earth Shield)", "!focus.buff(Water Shield)", "target.role(tank)" }},
+  --Earth Sheild Tank
+  { "974", {
+	"tank.range < 41",
+	"!tank.buff(974)",
+	"!tank.buff(Water Shield)",
+  }, "tank" }, 
   { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
+  
+    --SoO Dispells 
+  { "Purify Spirit", "@coreHealing.needsDispelled('Shadow Word: Bane')" }, --The Fallen Protectors
+  
+  { "Purify Spirit", "@coreHealing.needsDispelled('Lingering Corruption')" }, --Norushen
+  
+  { "Purify Spirit", {  --Sha of Pride encounter
+	"player.buff(Power of the Titans)",
+	"@coreHealing.needsDispelled('Mark of Arrogance')",
+  }}, 
 
   -- healing totem
-  { "Healing Stream Totem", "@coreHealing.needsHealing(97, 4)", "lowest" },
-  { "Mana Tide Totem", "player.mana < 40" },
+  { "Healing Stream Totem", { "!buff.any(Healing Stream Totem)", "@coreHealing.needsHealing(97, 4)", "lowest", }},
+  { "Mana Tide Totem", "player.mana < 20" },
   { "Healing Tide Totem", "@coreHealing.needsHealing(60, 4)", "lowest" },
 
   -- Dispell
@@ -50,7 +72,14 @@ ProbablyEngine.rotation.register_custom(264, "RestoShamenKoha", {
   { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
   { "Chain Heal", "@coreHealing.needsHealing(90, 4)", "lowest" },
   { "Healing Wave", "@coreHealing.needsHealing(85, 1)", "lowest", },
-  { "Lightning Bolt", { "focus.exists", "player.mana < 60" }},
+  { "3599", { --Searing Totem
+  "!player.totem(Fire Elemental Totem)",
+   "!player.totem(3599)"
+   }},
+  { "8050", "!target.debuff(8050)" }, --Flame Shock
+  { "51505" }, --Lavaburst
+  { "403", "player.mana < 60" },
+  { "403" }, --Lightning Bolt
 
 },
 {
