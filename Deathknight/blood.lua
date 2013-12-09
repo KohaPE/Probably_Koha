@@ -3,7 +3,19 @@
 -- Created on Nov 2nd 2013 12:12 am
 ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 
+--PVP
+{{
 
+--Trinkets
+
+
+--Dots
+{ "Outbreak", { "!target.debuff(Frost Fever)", "!target.debuff(Blood Plague)", }},
+{ "Icy Touch", "!target.debuff(Frost Fever)" },
+{ "Plague Strike", "!target.debuff(Blood Plague)" },
+}, "toggle.pvp" },
+
+{{
 --Trinket Procs
 { "#gloves" },
 	{ "#trinket1" },
@@ -56,6 +68,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 	"player.spell.cooldown(46584)",
 	"player.spell.usable(48792)"
 	}},
+	
 
 --Dots Tracking
 	{ "Outbreak", "!target.debuff(Frost Fever)" },
@@ -109,6 +122,8 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 	{ "56815" }, --Rune Strike
 	{ "45529", "player.buff(114851).count >= 5" }, --BloodTap
 	{ "57330" }, --Horn of Winter
+}, "!toggle.pvp" },
+
 -- Out Of Combat
 },
 {
@@ -117,4 +132,6 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 { "49222", "!player.buff" }, --Bone Shield
 { "42650", "modifier.alt" }, --Army of the Dead
 { "43265", "modifier.shift", "ground" }, --Death and Decay
-})
+}, function ()
+ ProbablyEngine.toggle.create('pvp', 'Interface\\Icons\\Spell_Shadow_Nethercloak', 'Player Vs Player', '')
+end)

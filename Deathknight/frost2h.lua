@@ -4,6 +4,63 @@
 -- Created on Nov 1st 2013 11:11 pm
 ProbablyEngine.rotation.register_custom(251, "Frost2HKoha", {
 
+
+--PVP
+{{
+
+--Presence Checks
+{ "Frost Presence", { "!player.buff(Frost Presence)", "player.health >= 80" }},
+{ "Blood Presence", { "!player.buff(Blood Presence)", "player.health <= 79" }},
+--Interupts
+{ "47528", "modifier.interrupts" },  --MindFreeze
+{ "108194", { "player.spell(108194).exists", "modifier.interrupts" }}, --Asphyxiate
+
+--Cooldowns
+{ "26297", { "player.spell(26297).exists", "modifier.cooldowns" }}, --Berserking
+{ "20572", { "player.spell(20572).exists", "modifier.cooldowns" }}, --Blood Fury
+{ "Remorseless Winter", "modifier.alt" },
+{ "51271", "modifier.cooldowns" }, --pillar of frost
+{ "46584", "modifier.cooldowns" }, --Raise Dead
+{ "47568", { --Empower Rune Weapon
+	"modifier.cooldowns", 
+	"player.runicpower <= 25", 
+	"player.runes(death).count = 0", 
+	"player.runes(frost).count = 0", 
+	"player.runes(unholy).count = 0" 
+}}, 
+--Snares
+{ "Chains of Ice", { "target.debuff(Frost Fever)", "!target.debuff(Chains of Ice)", "target.range >= 10" }},
+--Trinkets
+
+--Survival
+{ "48707", "player.health < 70" }, --Anti-Magic Shell
+{ "49998", "player.health < 50" }, --Death Strike
+{ "119975", { "player.spell(119975).exists", "player.health < 40" }}, --Conversion
+{ "108196", { "player.spell(108196).exists", "player.health < 80" }}, --Death Siphon
+{ "48792", "player.health < 30" }, --Icebound Foritude1
+
+--Dots
+{ "Outbreak", { "!target.debuff(Frost Fever)", "!target.debuff(Blood Plague)", }},
+{ "Howling Blast", { "player.range < 30", "!target.debuff(Frost Fever)" }},
+{ "Plague Strike", { "player.range <=8", "!target.debuff(Blood Plague)" }},
+--Rotation
+
+{ "49020", { "player.range <= 8", "player.runes(Frost).count >= 1", "player.runes(Death).count >= 1", }}, --Obliterate
+{ "49020", { "player.range <= 8", "player.runes(Death).count >= 2" }}, --Obliterate
+{ "49143", { "player.range <= 8", "player.runicpower >= 30" }}, --Frost Strike
+{ "130735", { "player.runes(Death).count >=1 ", "player.range <= 8", "target.health < 30" }}, --Soul Reaper
+{ "49184", { "player.range < 30", "player.buff(59052)" }}, --Howling Blast
+{ "49184", { "player.range < 30", "player.buff(59057)" }}, --Howling Blast
+{ "49020", { "player.range <= 8","player.buff(51128)" }}, --Obliterate
+{ "49020", "player.range < 30" }, --Obliterate
+{ "57330" }, --Horn of Winter
+{ "49143", { "player.range < 30", "player.runicpower >= 60" }}, --Frost Strike
+{ "45529", { "player.spell(45529).exists", "player.buff(114851).count >= 5" }}, --Blood Tap
+{ "57330" }, --Horn of Winter
+
+}, "toggle.pvp" },
+
+{{
 --Presence Checks
 	{ "48266", "!player.buff(48266)" }, --Frost Presence
 
@@ -116,6 +173,7 @@ ProbablyEngine.rotation.register_custom(251, "Frost2HKoha", {
     { "49143" }, --Frost Strike
     { "45529", "player.buff(114851).count >= 5" }, --Blood Tap
     { "57330" }, --Horn of Winter
+	}, "!toggle.pvp" },
     
 -- Out Of Combat
 },
@@ -124,8 +182,8 @@ ProbablyEngine.rotation.register_custom(251, "Frost2HKoha", {
 { "48265", "player.moving" }, --Unholy Presence
 { "42650", "modifier.alt" }, --Army of the Dead
 { "43265", "modifier.shift", "ground" }, --Death and Decay
-
-  }
-)
+}, function ()
+ ProbablyEngine.toggle.create('pvp', 'Interface\\Icons\\Spell_Shadow_Nethercloak', 'Player Vs Player', '')
+end)
 
 --Update 20/11/2013 By Koha
