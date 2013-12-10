@@ -55,7 +55,8 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 { "Greater Healing Wave", "@coreHealing.needsHealing(60, 1)", "lowest" },
 
 --Moderate Healing
-{ "Chain Heal", "@coreHealing.needsHealing(87, 3)", "lowest" },
+{ "Chain Heal", { "@coreHealing.needsHealing(87, 3)", "lowest.buff(Riptide)", "lowest" }},
+{ "Chain Heal", "@coreHealing.needsHealing(85, 3)", "lowest" },
 
 --Basic Healing
 { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
