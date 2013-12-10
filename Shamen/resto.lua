@@ -72,6 +72,7 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 {
 { "Earthliving Weapon", "!player.enchant.mainhand" },
 { "Water Shield", "!player.buff" },
+{ "Healing Rain", "modifier.shift", "ground" },
 { "Greater Healing Wave", "@coreHealing.needsHealing(60, 1)", "lowest" },
 { "Chain Heal", "@coreHealing.needsHealing(87, 3)", "lowest" },
 { "Healing Wave", "@coreHealing.needsHealing(93, 1)", "lowest" },
