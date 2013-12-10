@@ -3,17 +3,28 @@
 -- Created on Nov 13th 2013 6:18 am
 ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 
+{ "Rain of Fire", "modifier.shift", "ground" },
 --Trinkets
 { "#gloves" },
 { "#trinket1" },
 { "#trinket2" },
 
-{ "Shadowburn", { "target.health <= 20", "!target.debuff(Shadowburn)", "target.ttd <= 5",}},
+{ "Shadowburn", { "!modifier.last(Shadowburn)", "target.ttd < 4","target.health <= 20", "!target.debuff(Shadowburn)", "target.deathin < 4", }},
+{ "Conflagrate", { "player.embers > 30", "!player.buff(Backdraft)", }},
+{ "Incinerate", "player.moving" },
 --Rein of fire
-{ "Rain of Fire", "modifier.shift", "ground" },
 
+
+
+	--Auto Target Enemy 
+  { "!/targetenemy [noharm]", {
+    "!target.alive", 
+	"!target.enemy",
+	"!target.exists",
+  }},
 -- Cooldowns
   { "Dark Soul: Instability",{ "modifier.alt", "modifier.cooldowns" }},
+  { "Mortal Coil", "player.health < 70" },
 
   --Pet Survival
   { "Health Funnel", { "player.glyph(42461).exists", "pet.health < 85", }},
@@ -23,7 +34,6 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 {{
 { "Summon Doomguard",{ "modifier.control", "modifier.cooldowns", }},
 { "Fire and Brimstone", "player.embers >= 15" },
-{ "!/cancelaura Fire and Brimstone", { "!modifier.multitarget", "player.embers < 9", }},
 { "Havoc" },
 {{
 { "Conflagrate" , "player.embers >= 10" },
@@ -31,6 +41,7 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 { "Incenerate", "player.embers >= 15" },
 }, "player.buff(Fire and Brimstone)" },
 }, "modifier.multitarget" },
+{ "!/cancelaura Fire and Brimstone", { "player.buff(Fire and Brimstone)", "!modifier.multitarget", "player.embers <= 9", }},
 
 
 --Rotation Single
