@@ -34,7 +34,7 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 {{
 { "Summon Doomguard",{ "modifier.control", "modifier.cooldowns", }},
 { "Fire and Brimstone", "player.embers >= 15" },
-{ "Havoc" },
+{ "Havoc", "focus.exists" },
 {{
 { "Conflagrate" , "player.embers >= 10" },
 { "Immolate", { "target.debuff(Immolate).duration <= 4", "!modifier.last(Immolate)", }},
