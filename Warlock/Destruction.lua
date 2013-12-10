@@ -28,7 +28,7 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 
   --Pet Survival
   { "Health Funnel", { "player.glyph(42461).exists", "pet.health < 85", }},
-  { "Flames of Xoroth", { "!pet.exists", "player.embers >= 10", }},
+  { "Flames of Xoroth", { "!player.spell(108503).exists", "!pet.exists", "player.embers >= 10", }},
   
 --Rotation Multi
 {{
