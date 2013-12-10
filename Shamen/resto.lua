@@ -1,5 +1,3 @@
--- SPEC ID 263
-
 ProbablyEngine.library.register('coreHealing', {
   needsHealing = function(percent, count)
     return ProbablyEngine.raid.needsHealing(tonumber(percent)) >= count
@@ -13,83 +11,73 @@ ProbablyEngine.library.register('coreHealing', {
     end
   end,
 })
--- ProbablyEngine Rotation Packager
--- Custom Resto Druid Rotation
--- Created on Nov 2nd 2013 1:03 am
-ProbablyEngine.rotation.register_custom(264, "RestoShamenKoha", {
 
-  -- aoe
- { "Unleash Elements", { "@coreHealing.needsHealing(99, 1)", "lowest", "modifier.shift", }},
-  { "Healing Rain", "modifier.shift", "ground" },
+-- Custom Resto Shaman Rotation v0.1
 
-  --Trinkets
-{ "#gloves" },
-{ "#trinket1" },
-{ "#trinket2" },
-  
-    --Auto Target Enemy 
-  { "!/targetenemy [noharm]", {
-    "!target.alive", 
-	"!target.enemy",
-	"!target.exists",
-  }},
+ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 
-  -- buffs
-  { "Earthliving Weapon", "!player.enchant.mainhand" },
-  { "Water Shield", "!player.buff(Water Shield)" },
+--Healing Rain
+{ "Unleash Elements", { "modifier.shift", "@coreHealing.needsHealing(99, 1)" }, "lowest" },
+{ "Healing Rain", "modifier.shift", "ground" },
 
-  -- tank
-    --Earth Sheild Tank
-  { "974", {
-	"tank.range < 41",
-	"!tank.buff(974)",
-	"!tank.buff(Water Shield)",
-  }, "tank" }, 
-  { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
+--Interupts
+{ "Wind Shear", "modifier.interupt" },
 
-  -- healing totem
-  { "Healing Stream Totem", "@coreHealing.needsHealing(97, 4)", "lowest" },
-  { "Mana Tide Totem", "player.mana < 40" },
-  { "Healing Tide Totem", "@coreHealing.needsHealing(60, 4)", "lowest" },
+--Totems
+{ "Healing Stream Totem", { "@coreHealing.needsHealing(98, 1)" }, "lowest" },
+{ "Healing Tide Totem", { "@coreHealing.needsHealing(60, 5)" }, "lowest" },
+{ "Mana Tide Totem", "player.mana < 30" },
+{ "Totemic Recall", { "player.glyph(41535).exists", "player.totem(Healing Stream Totem).duration <= 2", }},
 
-  --Dispells
-  { 'Purify Spirit', { 'player.buff(Gift of the Titans)', '@coreHealing.needsDispelled("Mark of Arrogance")' }, nil },
-  { 'Purify Spirit', '@coreHealing.needsDispelled("Shadow Word: Bane")', nil },
-  { 'Purify Spirit', '@coreHealing.needsDispelled("Corrosive Blood")', nil },
-  { 'Purify Spirit', '@coreHealing.needsDispelled("Harden Flesh")', nil },
-  { 'Purify Spirit', '@coreHealing.needsDispelled("Torment")', nil },
-  { 'Purify Spirit', '@coreHealing.needsDispelled("Breath of Fire")', nil },
-  { 'Purify Spirit', '@coreHealing.needsDispelled("Aqua Bomb")', nil },
-  { "Purify Spirit", "@coreHealing.needsDispelled('Shadow Word: Bane')" }, --The Fallen Protectors
-  { "Purify Spirit", "@coreHealing.needsDispelled('Lingering Corruption')" }, --Norushen
-  { "Purify Spirit", {  --Sha of Pride encounter
-	"player.buff(Power of the Titans)",
-	"@coreHealing.needsDispelled('Mark of Arrogance')",
-  }}, 
+--Cooldowns
+{ "Spiritwalker's Grace", { "player.moving", "modifier.cooldowns", }},
+{ "Ascendance", "modifier.cooldowns" },
+{ "Bloodlust", { "modifier.cooldowns","!debuff.any(Sated)" }},
 
-  -- Unleash Life
-  { "Greater Healing Wave", "lowest.health < 50" },
-  { "Unleash Elements", "lowest.health < 50" },
+--Dispell
+  { "Purify Spirit", "@coreHealing.needsDispelled('Aqua Bomb')" },
+--SoO Dispells 
+  { "Purify Spirit", "@coreHealing.needsDispelled('Shadow Word: Bane')" },
+  { "Purify Spirit", "@coreHealing.needsDispelled('Lingering Corruption')" },
+  { "Purify Spirit", { "player.buff(Power of the Titans)", "@coreHealing.needsDispelled('Mark of Arrogance')", }}, 
+  { "Purify Spirit", "@coreHealing.needsDispelled('Corrosive Blood')" },
 
-  { "Healing Wave", {
-    "lowest.health < 91",
-    "lowest.debuff(Chomp)"
-  }},
+--Auto Target Enemy on DPS Toggle
+{ "!/targetenemy [noharm]", { "toggle.dps", "!target.alive", "!target.enemy", "!target.exists", }},
 
-  -- regular healing
-  { "Healing Surge", "@coreHealing.needsHealing(40, 1)", "lowest" },
-  { "Greater Healing Wave", {
-  	"@coreHealing.needsHealing(55, 1)",
-    "player.buff(Tidal Waves).count = 2",
-    "lowest",
-  }},
-  { "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
-  { "Chain Heal", "@coreHealing.needsHealing(90, 4)", "lowest" },
-  { "Healing Wave", "@coreHealing.needsHealing(85, 1)", "lowest", },
-  { "Lightning Bolt", "player.mana < 60" },
+
+--Tank/Focus Healing
+{ "Earth Shield", { "!tank.buff(Earth Shield)", "!tank.buff(Water Sheild)", }, "tank" },
+{ "Riptide", { "@coreHealing.needsHealing(99, 1)", "!tank.buff(Riptide)", "tank" }},
+
+--Heavy Healing
+{ "Healing Surge", "@coreHealing.needsHealing(40, 1)", "lowest" },
+{ "Greater Healing Wave", "@coreHealing.needsHealing(60, 1)", "lowest" },
+
+--Moderate Healing
+{ "Chain Heal", "@coreHealing.needsHealing(87, 3)", "lowest" },
+
+--Basic Healing
+{ "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
+{ "Healing Wave", "@coreHealing.needsHealing(93, 1)", "lowest" },
+
+--DPS Toggle for Mana
+{{
+{ "Lightning Bolt", "target.range <= 29" },
+}, "toggle.dps" },
+
 
 },
+--Out of Combat
 {
-  { "Earthliving Weapon", "!player.enchant.mainhand" },
-  { "Water Shield", "!player.buff(Water Shield)" },
-})
+{ "Earthliving Weapon", "!player.enchant.mainhand" },
+{ "Water Shield", "!player.buff" },
+{ "Greater Healing Wave", "@coreHealing.needsHealing(60, 1)", "lowest" },
+{ "Chain Heal", "@coreHealing.needsHealing(87, 3)", "lowest" },
+{ "Healing Wave", "@coreHealing.needsHealing(93, 1)", "lowest" },
+{ "Totemic Recall", { "player.glyph(41535).exists", "player.totem(Healing Stream Totem).duration <= 2", }},
+
+}, function()
+ProbablyEngine.toggle.create('dps', 'Interface\\Icons\\spell_nature_lightning', 'DPS', 'Toggle for Lightning Bolt Mana Return')
+
+end)
