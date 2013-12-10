@@ -46,6 +46,7 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 
 --Rotation Single
 {{
+{ "Chaos Bolt", "player.buff(Tempus Repit)" },
 { "Summon Terrorguard",{ "modifier.control", "modifier.cooldowns" }},
 { "Immolate", { "target.debuff(Immolate).duration <= 4", "!modifier.last(Immolate)", }},
 { "Shadowburn", { "target.health <= 20", "player.embers >= 10" }},
