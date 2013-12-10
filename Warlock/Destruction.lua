@@ -53,7 +53,7 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 { "Conflagrate", { "player.spell(Conflagrate).charges > 1", "!player.buff(Backdraft)", }},
 {{
 { "Chaos Bolt",{ "!modifier.last(Chaos Bolt)", "player.embers >= 35" }},
-{ "Chaos Bolt", "player.buff(Dark Soul: Instability)" },
+{ "Chaos Bolt", "player.buff(Dark Soul: Instability).duration >= 5" },
 { "Chaos Bolt", "player.buff(Skull Banner)" },
 }, "target.health > 20" },
 }, "!modifier.multitarget" },
@@ -65,5 +65,4 @@ ProbablyEngine.rotation.register_custom(267, "KohasDestruction", {
 {
 { "Dark Intent", "!player.buff(Dark Intent)" },
 { "Rain of Fire", "modifier.shift", "ground" },
-{ "Unending Breath", "!player.buff(Unending Breath)" },
 })
