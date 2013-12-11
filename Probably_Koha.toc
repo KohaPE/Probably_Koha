@@ -3,6 +3,9 @@
 ## Notes: ProbablyEngine Custom Death Knight
 ## Dependencies: Probably
 lib.lua
+Rogue\combat.lua
+Rogue\ass.lua
+Rogue\sub.lua
 Deathknight\blood.lua
 Deathknight\frost2h.lua
 Deathknight\frostdw.lua
@@ -14,6 +17,7 @@ Hunter\survival.lua
 Druid\bear.lua
 Druid\restotree.lua
 Shamen\resto.lua
+Paladin\Holy.lua
 Monk\brewmaster.lua
 Monk\WW.lua
 Monk\LW.lua

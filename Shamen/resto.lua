@@ -24,10 +24,15 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 { "Wind Shear", "modifier.interupt" },
 
 --Totems
-{ "Healing Stream Totem", { "@coreHealing.needsHealing(98, 1)" }, "lowest" },
-{ "Healing Tide Totem", { "@coreHealing.needsHealing(60, 5)" }, "lowest" },
+{ "Healing Stream Totem", { "@coreHealing.needsHealing(98, 2)" }, "lowest" },
+{ "Healing Tide Totem", { "@coreHealing.needsHealing(60, 3)" }, "lowest" },
 { "Mana Tide Totem", "player.mana < 30" },
 { "Totemic Recall", { "player.glyph(41535).exists", "player.totem(Healing Stream Totem).duration <= 2", }},
+{ "Lightning Bolt", "player.mana < 15" },
+
+{{
+{ "Lightning Bolt", { "player.mana <= 100", "lowest.health >= 90" }},
+}, "toggle.dps" },
 
 --Cooldowns
 { "Spiritwalker's Grace", { "player.moving", "modifier.cooldowns", }},
@@ -45,27 +50,28 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 --Auto Target Enemy on DPS Toggle
 { "!/targetenemy [noharm]", { "toggle.dps", "!target.alive", "!target.enemy", "!target.exists", }},
 
-
+{{
 --Tank/Focus Healing
-{ "Earth Shield", { "!tank.buff(Earth Shield)", "!tank.buff(Water Sheild)", }, "tank" },
-{ "Riptide", { "@coreHealing.needsHealing(99, 1)", "!tank.buff(Riptide)", "tank" }},
+{ "Earth Shield", { "tank.exists", "!tank.buff(Earth Shield)", "!tank.buff(Water Sheild)", }, "tank" },
+{ "Riptide", { "!tank.buff", "tank.health <= 100" }},
+}, "!tank.range > 40" },
 
+{{
 --Heavy Healing
-{ "Healing Surge", "@coreHealing.needsHealing(40, 1)", "lowest" },
-{ "Greater Healing Wave", "@coreHealing.needsHealing(60, 1)", "lowest" },
+{ "Healing Surge", "lowest.health < 40", "lowest" },
 
 --Moderate Healing
-{ "Chain Heal", { "@coreHealing.needsHealing(87, 3)", "lowest.buff(Riptide)", "lowest" }},
-{ "Chain Heal", "@coreHealing.needsHealing(85, 3)", "lowest" },
+
+{ "Chain Heal", "@coreHealing.needsHealing(94, 3)", "lowest" },
+{ "Greater Healing Wave", "lowest.health < 60", "lowest" },
+
 
 --Basic Healing
-{ "Riptide", { "@coreHealing.needsHealing(95, 1)", "!lowest.buff(Riptide)", }, "lowest" },
-{ "Healing Wave", "@coreHealing.needsHealing(93, 1)", "lowest" },
+{ "Riptide", { "lowest.health < 95", "!lowest.buff(Riptide)" }, "lowest" },
+{ "Healing Wave", "lowest.health < 86", "lowest" },
+}, "!lowest.range > 40" },
 
---DPS Toggle for Mana
-{{
-{ "Lightning Bolt", "target.range <= 29" },
-}, "toggle.dps" },
+
 
 
 },
@@ -73,6 +79,7 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 {
 { "Earthliving Weapon", "!player.enchant.mainhand" },
 { "Water Shield", "!player.buff" },
+{ "Unleash Elements", { "modifier.shift", "@coreHealing.needsHealing(99, 1)" }, "lowest" },
 { "Healing Rain", "modifier.shift", "ground" },
 { "Greater Healing Wave", "@coreHealing.needsHealing(60, 1)", "lowest" },
 { "Chain Heal", "@coreHealing.needsHealing(87, 3)", "lowest" },
