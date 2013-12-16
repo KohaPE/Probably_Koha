@@ -46,7 +46,7 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
  -- Survival
 	{ "48707", "player.health < 70" }, --Anti-Magic Shell
 	{ "49998", "player.health < 50" }, --Death Strike
-	{ "108196", "player.health < 80" }, --Death Siphon
+	{ "108196", { "player.spell(108196).exists", "player.health < 80" }}, --Death Siphon
 	{ "48792", "player.health < 30" }, --Icebound Foritude1
 
   --Dots Tracking
