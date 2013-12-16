@@ -51,6 +51,9 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 	{ "108194", { "player.spell(108194).exists", "modifier.interrupts" }}, --Asphyxiate
 
 -- Survival
+	--Lichborne Healing
+	{ "Lichborne", { "player.spell(49039).exists", "player.health < 40" }},
+	{ "Death Coil", { "player.health < 40", "player.buff(Lichborne)", "player", }},
   	{ "48707", "player.health < 70" }, --Anti-Magic Shell
 	{ "49998", "player.health < 50" }, --Death Strike
   	{ "49028", "player.health < 60" }, --Dancing Rune

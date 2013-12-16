@@ -12,7 +12,8 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 	{ "pause", "modifier.control" },
 
 -- Misdirect Test
-	{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
+	--{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
+	--{ "Misdirection",  "modifier.shift" },
 	
 	--Auto Target Enemy 
   { "!/targetenemy [noharm]", {
@@ -28,6 +29,9 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 -- Pet
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.alive" },
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.exists" },
+	
+	{ "Misdirection", { "focus.exists", "!player,buff(Misdirection)", "target.threat > 60" }, "focus" },
+    { "Misdirection", { "pet.exists", "!player,buff(Misdirection)", "!focus.exists", "target.threat > 85" }, "pet" },
 
 -- Traps
 	{ "Explosive Trap", "modifier.alt", "ground" },
@@ -100,10 +104,9 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 },
 {
 --Buffs
-{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
+{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", { "!player.buff(Misdirection)", "modifier.shift" }},
 -- Pet Survival
 { "Mend Pet", { "pet.health <= 80", "pet.exists", "!pet.buff(Mend Pet)" }},
-{ "Aspect of the Cheetah", { "!player.buff(Aspect of the Cheetah)", "player.moving" }},
 { "Aspect of the Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 { "Aspect of the Iron Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 

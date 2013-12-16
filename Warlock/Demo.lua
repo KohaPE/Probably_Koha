@@ -28,7 +28,7 @@ ProbablyEngine.rotation.register_custom(266, "DemonicKoha", {
 {{
 	{ "Corruption", { "target.debuff(Corruption).duration <= 10", "player.demonicfury >= 950" }},
 	{ "Corruption", "target.debuff(Corruption).duration < 3" },
-	{ "Hand of Gul'dan", "!target.debuff(Shadowflame)" },
+	{ "Hand of Gul'dan", { "!modifier.last(Hand of Gul'dan)", "!target.debuff(Shadowflame)" },
 	{ "Soul Fire", "player.buff(Molten Core).count >= 2" },
 	{ "Soul Fire", { "target.health < 25", "player.buff(Molten Core)", }},
 	{ "Shadow Bolt" },

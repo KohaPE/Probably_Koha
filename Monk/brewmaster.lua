@@ -56,16 +56,14 @@ ProbablyEngine.rotation.register_custom(268, "Kohabrewmaster", {
 
 --Rotation AoE
 {{
-{{
 { "Expel Harm", "player.health < 80" },
 { "Blackout Kick", "!player.buff(Shuffle)" },
 { "Breath of Fire", "!target.debuff(Breath of Fire)" },
-{ "Rushing Jade Wind", "!player.buff(Russhing Jade Wind" },
+{ "Rushing Jade Wind", { "player.range <= 8", "!player.buff(Russhing Jade Wind" }},
 { "Spinning Crane Kick" },
 { "Jab" },
 { "Tiger Palm" },
 { "Grapple Weapon" },
-}, "player.range <= 8" },
 }, "modifier.multitarget" },
 
 --Rotation Single Target

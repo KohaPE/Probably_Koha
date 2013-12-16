@@ -13,6 +13,9 @@ ProbablyEngine.rotation.register_custom(269, "KohasWindWalker", {
 	}},
 { "Legacy of the White Tiger", "!player.buff(Legacy of the White Tiger)" },
 
+--Auto Target Enemy on DPS Toggle
+{ "!/targetenemy [noharm]", { "!target.alive", "!target.enemy", "!target.exists", }},
+
 --Interupts
 {{
 { "Spear Hand Strike" },

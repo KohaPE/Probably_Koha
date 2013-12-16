@@ -16,7 +16,9 @@ Hunter\BM.lua
 Hunter\survival.lua
 Druid\bear.lua
 Druid\restotree.lua
-Shamen\resto.lua
+Shaman\resto.lua
+Shaman\enhance.lua
+Shaman\enhanceM.lua
 Paladin\Holy.lua
 Monk\brewmaster.lua
 Monk\WW.lua
@@ -24,3 +26,5 @@ Monk\LW.lua
 Warrior\arms.lua
 Warrior\fury.lua
 Warrior\prot.lua
+Priest\shadow.lua
+Priest\disc.lua
