@@ -72,6 +72,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 	"player.spell.usable(48792)"
 	}},
 	
+	{ "56815", "player.runicpower > 90" },
 
 --Dots Tracking
 	{ "Outbreak", "!target.debuff(Frost Fever)" },
@@ -81,7 +82,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 	{ "Icy Touch", "target.debuff(Frost Fever).duration < 4" },
 	{ "Plague Strike", "target.debuff(Blood Plague).duration < 4" },
 	{ "Icy Touch", "!target.debuff(Frost Fever)" },
-	{ "Plague Strike", "!target.debuff(Blood Plague)" },
+	
 
 -- Refresh dots with Blood Boil
 	{ "48721", {
@@ -102,6 +103,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
   	{ "56222", "modifier.taunt" }, --Dark Command
   	{ "49576", "modifier.taunt" }, --Death Grip
   	{ "114866", "target.health < 35" }, --Soul Reaper
+	{ "56815", "player.runicpower > 90" },
 
 --Rotation AOE
 	{ "49998" }, --Death Strike
