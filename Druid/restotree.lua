@@ -21,45 +21,63 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 
 
 --Innervate
-{ "Innervate", "player.mana < 80", "player" },
+{ "29166", "player.mana < 80", "player" }, --Innervate if player's mana is lower then 80%
 
 --Survival
-{ "Barkskin", "player.health < 30" },
+{ "22812", "player.health < 30" }, --Barkskin if player's health is lower then 30%
 
 
 --Cooldowns
-{ "Natures Vigil", "modifier.cooldowns" },
+{ "124974", "modifier.cooldowns" }, --Nature's Vigil when cooldowns are enabled
+{ "106731", { "modifier.cooldowns", "@coreHealing.needsHealing(50, 5)" }, "player" }, --Incarnation if 5 people are under 50%
 
+--Defensive Cooldowns
+{ "102342", "tank.health < 60", "tank" }, --Iron Bark on tank below 60% health
+{ "102342", "lowest.health < 60", "lowest" }, --Iron Bark on lowest target below 60% health
+{ "123158", "lowest.health <= 40" },
+{ "5185", { "player.buff(132158)", "lowest.health < 40", }},
+
+{{														--Range check Nested Command for healing.
 -- Dispell
-{ "Nature's Cure", "@coreHealing.needsDispelled('Aqua Bomb')" },
+{ "88423", "@coreHealing.needsDispelled(Aqua Bomb)" }, -- Nature's Cure if player needs Aqua Bomb dispelled.
+{ "88423", "@coreHealing.needsDispelled(Aqua Bomb)" },  -- Aqua Bomb (Proving Grounds)
+{ "88423", "@coreHealing.needsDispelled(Shadow Word: Bane)" }, -- Shadow Word: Bane (Fallen Protectors)
+{ "88423", "@coreHealing.needsDispelled(Lingering Corruption)" },-- Lingering Corruption (Norushen)
+{ "88423", { "player.buff(144364)", "@coreHealing.needsDispelled(Mark of Arrogance)" }}, -- Mark of Arrogance (Sha of Pride) 
+{ "88423", "@coreHealing.needsDispelled(Corrosive Blood)" },  -- Corrosive Blood (Thok)
+{ "8936", { "lowest.health < 100", "!lowest.buff(8936)" }, "target.id(71604)" },
+{ "5185", { "lowest.health < 100", "lowest.buff(8936)", }, "target.id(71604)" },
 
+--Clear Casting Procs
+{ "740", "@coreHealing.needsHealing(67, 7)" }, --Tranquility if 7 players below 67%
+{ "8936", { "player.buff(16870)", "!lowest.buff(8936)", "lowest.health <= 95", }}, --Regrowth if Clear cast, Lowest raid health less then 95% and tank is within range
+{ "5185", { "player.buff(16870)", "lowest.health <= 80", }}, --Healing Touch if clear cast, Lowest raid health less then 80 and tank is within range
+
+--Tank Healing
+{ "33763", { "!tank.buff(33763).count = 3", "tank.health < 99", }}, --LifeBloom if tank/focus missing 3 stacks of life Bloom
+{ "33763", "tank.buff(33763).duration <= 3", "tank" }, --LifeBloom if 3 seconds left so stacks dont fall off.
+{ "8936", { "tank.health <= 45", "!tank.buff(8936)", }}, --Regrowth tank if health is under 45% and hasn't got a regrowth on.
 
 --Healing
-{ "Tranquility", "modifier.shift" },
-{ "Tranquility", { "@coreHealing.needsHealing(60, 4)", "lowest" }},
-{ "Genesis", { "@coreHealing.needsHealing(50, 3)", "lowest.buff(Rejuvenation)", }, "lowest" },
-{ "Regrowth", { "player.buff(Clearcasting)", "!lowest.buff(Regrowth)", "lowest.health < 90", }},
-{ "Healing Touch", { "player.buff(Clearcasting)", "lowest.buff(Regrowth)", "lowest.health < 90", }},
-{ "Lifebloom", { "!tank.buff(Lifebloom).count = 3", "lowest.health < 99", }},
-{ "Lifebloom", "tank.buff(Lifebloom).duration <= 3" },
+{ "145518", { "@coreHealing.needsHealing(70, 3)", "lowest.buff(774)", "!modifer.last(145518)", }}, --Genesis if 3 players below 70 and have the buff rejv
+{ "145205", "@coreHealing.needsHealing(99, 3)" }, --Mushroom Placement
+{ "102693", { "lowest.health < 97", "!modifier.last(102693)", }}, --Force of Nature if player is below 97%
+{ "18562", { "lowest.health <= 75", "lowest.buff(774)", }, "lowest" }, --Swift mend if player has rejuv buff and is below 70%
+{ "18562", { "lowest.health <= 75", "lowest.buff(8936)", }, "lowest" }, --Swiftmend if player has regrowth buff and is below 70%
+{ "48438", "@coreHealing.needsHealing(90, 3)", "lowest" }, --Wild Growth if 3 raid members are under 90%
+{ "8936", { "lowest.health <= 50", "!lowest.buff(8936)", }}, -- Regrowth lowest raid member if health is below 50% and doesnt have a regrowth buff
+{ "774", { "lowest.health <= 85", "!lowest.buff(774)", }}, --Rejevenate lowest raid memeber if health is below 85% and doesnt have rejuv buff
+{ "50464", "lowest.health < = 90" }, -- Nourish if target health below 90%
 
---Wild Mushroom
-{ "Wild Mushroom", "@coreHealing.needsHealing(99, 3)", "lowest" },
-{ "Wild Growth", "@coreHealing.needsHealing(87, 3)", "lowest" },
-{ "Rejuvenation", { "@coreHealing.needsHealing(78, 1)", "!lowest.buff(Rejuvenation)", }, "lowest" },
-{ "Swiftmend", { "@coreHealing.needsHealing(70, 1)", "lowest.buff(Rejuvenation)", }, "lowest" },
-{ "Force of Nature", "@coreHealing.needsHealing(90, 4)", "lowest" },
-{ "Wild Mushroom: Bloom", "@coreHealing.needsHealing(60, 5)", "lowest" },
-{ "Regrowth", { "@coreHealing.needsHealing(50, 1)", "!lowest.buff(Regrowth)", }, "lowest" },
 
---Instant Healing Touch
-{ "Nature's Swiftness", "@coreHealing.needsHealing(30, 1)", "lowest" },
-{ "Healing Touch", "@coreHealing.needsHealing(40, 1)", "lowest" },
+}, "lowest.range < 40", },
+
+
 
 -- Out Of Combat
 },
 {
 --Buffs
-{ "Mark of the Wild", "!player.buff(Mark of the Wild)" },
+{ "1126", "!player.buff(1126)" }, --Mark of the Wild if missing buff
 
 })
