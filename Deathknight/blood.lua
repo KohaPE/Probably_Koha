@@ -64,37 +64,25 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
   	{ "48982", "player.health < 40" }, --RuneTap
   	{ "47568", "player.health < 40" }, --ERW
 
--- 48792 Macro
-  	{ "!/cast 46584\n/cast 48792", { --Deathpact Macro
-	"player.health < 35",
-	"player.spell.cooldown(48792)",
-	"player.spell.cooldown(46584)",
-	"player.spell.usable(48792)"
+	
+	{ "Blood Boil", { 
+	"modifier.multitarget",
+	"player.buff(Crimson Scourge)",
+	"target.range <= 8",
 	}},
 	
-	{ "56815", "player.runicpower > 90" },
+	{ "56815", "player.runicpower >= 80" },
 
 --Dots Tracking
 	{ "Outbreak", "!target.debuff(Frost Fever)" },
 	{ "Blood Boil", {
-	  "target.range <= 8",
-	  "target.debuff(Frost Fever).duration < 4" }},
-	{ "Icy Touch", "target.debuff(Frost Fever).duration < 4" },
-	{ "Plague Strike", "target.debuff(Blood Plague).duration < 4" },
+	 "target.range <= 8",
+	"target.debuff(Frost Fever).duration < 4",
+	"target.debuff(Blood Plague).duration < 4", }},
 	{ "Icy Touch", "!target.debuff(Frost Fever)" },
+	{ "Plague Strike", "!target.debuff(Blood Plague)" },
+	{ "48721", { "target.debuff(Blood Plague)", "player.runes(blood).count = 2" }},
 	
-
--- Refresh dots with Blood Boil
-	{ "48721", {
-	"target.debuff(Frost Fever)",
-	"target.debuff(Blood Plague)",
-	"target.debuff(Frost Fever).duration < 10",
-	"target.debuff(Blood Plague).duration < 10",
-	}},
-	{ "48721", { 
-	"modifier.multitarget",
-	"player.buff(81141)",
-	}},
 
 -- defensive
   	{ "49222", "!player.buff" }, --Bone Shield
@@ -117,12 +105,13 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 	
 
 -- Rotation Single Target
-	{ "55050", { "player.runes(blood).count >= 1", "!modifier.multitarget", }}, --Heart Strike
-	{ "49998" }, --Death Strike
-	{ "48721", { --Blood Boil
+{ "48721", { --Blood Boil
 	"player.buff(81141)",
 	"target.range <= 5"
 	}},
+	{ "48721", "player.runes(blood).count = 2" },
+	{ "55050", { "player.runes(blood).count >= 1", "!modifier.multitarget", }}, --Heart Strike
+	{ "49998" }, --Death Strike
 	{ "114866", "target.health < 35" }, --Soul Reaper
 	{ "56815" }, --Rune Strike
 	{ "45529", "player.buff(114851).count >= 5" }, --BloodTap
