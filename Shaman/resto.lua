@@ -60,6 +60,7 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 
 {{
 --Heavy Healing
+{ "Riptide", { "lowest.health < 99", "!lowest.buff(Riptide)" }, "lowest" },
 { "Healing Surge", "lowest.health < 40", "lowest" },
 
 --Moderate Healing
@@ -69,7 +70,7 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 
 
 --Basic Healing
-{ "Riptide", { "lowest.health < 99", "!lowest.buff(Riptide)" }, "lowest" },
+
 { "Healing Wave", "lowest.health < 90", "lowest" },
 }, "!lowest.range > 40" },
 
