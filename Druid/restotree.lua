@@ -22,6 +22,7 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 
 --Innervate
 { "29166", "player.mana < 80", "player" }, --Innervate if player's mana is lower then 80%
+{ "145205", "modifier.shift", "mouseover" }, --Mushroom Placement
 
 --Survival
 { "22812", "player.health < 30" }, --Barkskin if player's health is lower then 30%
@@ -43,14 +44,14 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 { "88423", "@coreHealing.needsDispelled(Aqua Bomb)" },  -- Aqua Bomb (Proving Grounds)
 { "88423", "@coreHealing.needsDispelled(Shadow Word: Bane)" }, -- Shadow Word: Bane (Fallen Protectors)
 { "88423", "@coreHealing.needsDispelled(Lingering Corruption)" },-- Lingering Corruption (Norushen)
-{ "88423", { "player.buff(144364)", "@coreHealing.needsDispelled(Mark of Arrogance)" }}, -- Mark of Arrogance (Sha of Pride) 
+{ "88423", { "player.buff(144359)", "@coreHealing.needsDispelled(Mark of Arrogance)" }}, -- Mark of Arrogance (Sha of Pride) 
 { "88423", "@coreHealing.needsDispelled(Corrosive Blood)" },  -- Corrosive Blood (Thok)
 { "8936", { "lowest.health < 100", "!lowest.buff(8936)" }, "target.id(71604)" },
 { "5185", { "lowest.health < 100", "lowest.buff(8936)", }, "target.id(71604)" },
 
 --Clear Casting Procs
 { "740", "@coreHealing.needsHealing(67, 7)" }, --Tranquility if 7 players below 67%
-{ "8936", { "player.buff(16870)", "!lowest.buff(8936)", "lowest.health <= 95", }}, --Regrowth if Clear cast, Lowest raid health less then 95% and tank is within range
+{ "8936", { "!modifier.last(8936)", "player.buff(16870)", "!lowest.buff(8936)", "lowest.health <= 95", }}, --Regrowth if Clear cast, Lowest raid health less then 95% and tank is within range
 { "5185", { "player.buff(16870)", "lowest.health <= 80", }}, --Healing Touch if clear cast, Lowest raid health less then 80 and tank is within range
 
 --Tank Healing
@@ -60,7 +61,6 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 
 --Healing
 { "145518", { "@coreHealing.needsHealing(70, 3)", "lowest.buff(774)", "!modifer.last(145518)", }}, --Genesis if 3 players below 70 and have the buff rejv
-{ "145205", "@coreHealing.needsHealing(99, 3)" }, --Mushroom Placement
 { "102693", { "lowest.health < 97", "!modifier.last(102693)", }}, --Force of Nature if player is below 97%
 { "18562", { "lowest.health <= 75", "lowest.buff(774)", }, "lowest" }, --Swift mend if player has rejuv buff and is below 70%
 { "18562", { "lowest.health <= 75", "lowest.buff(8936)", }, "lowest" }, --Swiftmend if player has regrowth buff and is below 70%
@@ -79,5 +79,6 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 {
 --Buffs
 { "1126", "!player.buff(1126)" }, --Mark of the Wild if missing buff
+{ "145205", "modifier.shift", "mouseover" }, --Mushroom Placement
 
 })
