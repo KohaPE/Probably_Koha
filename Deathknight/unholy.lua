@@ -3,6 +3,75 @@
 -- Created on Nov 3rd 2013 6:30 am
 ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 
+--PVP
+{{
+
+--Presence Checks
+{ "Unholy Presence", { "!player.buff(Unholy Presence)", "modifier.control" }},
+{ "Blood Presence", { "!player.buff(Blood Presence)", "modifier.control" }},
+--Interupts
+{ "47528", "modifier.interrupts" },  --MindFreeze
+{ "108194", { "player.spell(108194).exists", "modifier.interrupts" }}, --Asphyxiate
+
+--Cooldowns
+{ "26297", "modifier.cooldowns" }, --Berserking
+{ "20572", "modifier.cooldowns" }, --Blood Fury
+{ "Remorseless Winter", "modifier.alt" },
+{ "Desecrated Ground", "modifier.alt" },
+{ "Gorefiend's Grasp", "modifier.alt" },
+{ "46584", { "!pet.exists", "modifier.cooldowns" }}, --Raise Dead
+{ "47568", { --Empower Rune Weapon
+	"modifier.cooldowns", 
+	"player.runicpower <= 25", 
+	"player.runes(death).count = 0", 
+	"player.runes(frost).count = 0", 
+	"player.runes(unholy).count = 0" 
+}}, 
+
+--Survival
+{ "48707", "player.health < 70" }, --Anti-Magic Shell
+{ "49998", "player.health < 50" }, --Death Strike
+{ "119975", { "player.spell(119975).exists", "player.health < 40" }}, --Conversion
+{ "108196", { "player.spell(108196).exists", "player.health < 80" }}, --Death Siphon
+{ "48792", "player.health < 30" }, --Icebound Foritude1
+
+--Lichborne survival
+{ "Lichborne", "player.health < 70" },
+{ "Death Coil", { "player.buff(Lichbourne)", "player.health <= 90", "player.runic power >= 40" }},
+
+--Snares
+{ "Chains of Ice", { "target.debuff(Frost Fever)", "!target.debuff(Chains of Ice)", "target.range >= 10" }},
+--Trinkets
+
+--Pet Survival
+{ "Death Coil", { "pet.exists", "pet.health <= 60", "pet", }},
+
+--Dots
+{ "Outbreak", { "!target.debuff(Frost Fever)", "!target.debuff(Blood Plague)", }},
+{ "Icy Touch", { "player.range < 30", "!target.debuff(Frost Fever)" }},
+{ "Plague Strike", { "player.range <=8", "!target.debuff(Blood Plague)" }},
+
+--AoE Rotation
+{{
+{ "115989", { "player.spell(115989).exists", "target.range <= 8", }},
+{ "Blood Boil", { "target.range <= 5", "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", }},
+{ "Death Coil", "player.buff(Sudden Doom)" },
+{ "Death Coil", "player.runicpower >= 32"},
+}, "modifier.multitarget", },
+-- Rotation
+{ "Dark Transformation" },
+{ "Death Coil", "player.buff(Sudden Doom)" },
+{ "Death Coil", "player.runicpower >= 32"},
+{ "Soul Reaper", { "!modifier.last(Soul Reaper)", "!target.debuff(Soul Reaper)", "target.health < 35" }},
+{ "Necrotic Strike" },
+{ "Festering Strike", { "player.runes(Blood).count >= 1", "player.runes(frost).count >= 1", }},
+{ "Scourge Strike" },
+{ "45529", "player.buff(114851).count >= 5" },
+{ "57330" },
+
+}, "toggle.pvp" },
+
+{{
 --Presence Checks
 	{ "48265", "!player.buff(48265)" }, --Unholy Presence
 
@@ -67,30 +136,21 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 
 --AOE
 {{
-{ "115989", {
-	"player.spell(115989).exists",
-	"target.range <= 8",
-	}},
-{ "Blood Boil", {
-	"target.range <= 5",
-	"target.debuff(Frost Fever)",
-	"target.debuff(Blood Plague)",
-	}},
-	{ "Death Coil", "player.buff(Sudden Doom)" },
+{ "115989", { "player.spell(115989).exists", "target.range <= 8", }},
+{ "Blood Boil", { "target.range <= 5", "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", }},
+{ "Death Coil", "player.buff(Sudden Doom)" },
 { "Death Coil", "player.runicpower >= 32"},
 }, "modifier.multitarget", },
 -- Rotation
 { "Dark Transformation" },
 { "Death Coil", "player.buff(Sudden Doom)" },
 { "Death Coil", "player.runicpower >= 32"},
-{ "Soul Reaper", "target.health < 35" },
-{ "Festering Strike", {
-	"player.runes(Blood).count >= 1",
-	"player.runes(frost).count >= 1",
-	}},
+{ "Soul Reaper", { "!modifier.last(Soul Reaper)", "!target.debuff(Soul Reaper)", "target.health < 35" }},
+{ "Festering Strike", { "player.runes(Blood).count >= 1", "player.runes(frost).count >= 1", }},
 { "Scourge Strike" },
 { "45529", "player.buff(114851).count >= 5" },
 { "57330" },
+}, "!toggle.pvp" },
 
 -- Out Of Combat
 },
@@ -99,6 +159,9 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 { "48265", "!player.buff(48265)" },
 { "42650", "modifier.alt" },
 { "59057", "modifier.shift", "ground" },
+--Pet
+	{ "46584", "!pet.exists" }, --raise ghoul
 
-  }
-)
+}, function ()
+ ProbablyEngine.toggle.create('pvp', 'Interface\\Icons\\Spell_Shadow_Nethercloak', 'Player Vs Player', '')
+end)
