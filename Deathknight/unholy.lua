@@ -39,6 +39,7 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 { "Lichborne", "player.health < 70" },
 { "Death Coil", { "player.buff(Lichbourne)", "player.health <= 90", "player.runic power >= 40" }},
 
+
 --Snares
 { "Chains of Ice", { "target.debuff(Frost Fever)", "!target.debuff(Chains of Ice)", "target.range >= 10" }},
 --Trinkets
@@ -48,8 +49,9 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 
 --Dots
 { "Outbreak", { "!target.debuff(Frost Fever)", "!target.debuff(Blood Plague)", }},
-{ "Icy Touch", { "player.range < 30", "!target.debuff(Frost Fever)" }},
+{ "Icy Touch", { "player.range < 10", "!target.debuff(Frost Fever)" }},
 { "Plague Strike", { "player.range <=8", "!target.debuff(Blood Plague)" }},
+{ "Dark Transformation" },
 
 --AoE Rotation
 {{
@@ -57,9 +59,10 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 { "Blood Boil", { "target.range <= 5", "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", }},
 { "Death Coil", "player.buff(Sudden Doom)" },
 { "Death Coil", "player.runicpower >= 32"},
+{ "Icy Touch" },
 }, "modifier.multitarget", },
 -- Rotation
-{ "Dark Transformation" },
+
 { "Death Coil", "player.buff(Sudden Doom)" },
 { "Death Coil", "player.runicpower >= 32"},
 { "Soul Reaper", { "!modifier.last(Soul Reaper)", "!target.debuff(Soul Reaper)", "target.health < 35" }},
@@ -122,6 +125,8 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 	{ "77575", {
 	"!target.debuff(Frost Fever)",
 	}},
+	
+	{ "Dark Transformation" },
 
 -- Refresh dots with hard casts
 	{ "45462", "target.debuff(Blood Plague).duration < 4" },
@@ -136,13 +141,15 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 
 --AOE
 {{
+{ "Dark Transformation" },
 { "115989", { "player.spell(115989).exists", "target.range <= 8", }},
 { "Blood Boil", { "target.range <= 5", "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", }},
 { "Death Coil", "player.buff(Sudden Doom)" },
 { "Death Coil", "player.runicpower >= 32"},
+{ "Icy Touch" },
 }, "modifier.multitarget", },
 -- Rotation
-{ "Dark Transformation" },
+
 { "Death Coil", "player.buff(Sudden Doom)" },
 { "Death Coil", "player.runicpower >= 32"},
 { "Soul Reaper", { "!modifier.last(Soul Reaper)", "!target.debuff(Soul Reaper)", "target.health < 35" }},
