@@ -56,18 +56,20 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 
 --Tank Healing
 { "33763", { "!tank.buff(33763).count = 3", "tank.health < 99", }}, --LifeBloom if tank/focus missing 3 stacks of life Bloom
-{ "33763", "tank.buff(33763).duration <= 3", "tank" }, --LifeBloom if 3 seconds left so stacks dont fall off.
-{ "8936", { "tank.health <= 45", "!tank.buff(8936)", }}, --Regrowth tank if health is under 45% and hasn't got a regrowth on.
+{ "33763", "focus.buff(33763).duration <= 3", "focus" }, --LifeBloom if 3 seconds left so stacks dont fall off.
+{ "8936", { "focus.health <= 45", "!focus.buff(8936)", }}, --Regrowth tank if health is under 45% and hasn't got a regrowth on.
 
 --Healing
 { "145518", { "@coreHealing.needsHealing(70, 3)", "lowest.buff(774)", "!modifer.last(145518)", }}, --Genesis if 3 players below 70 and have the buff rejv
+{ "145205", "@coreHealing.needsHealing(98, 5)" },
 { "102693", { "lowest.health < 97", "!modifier.last(102693)", }}, --Force of Nature if player is below 97%
 { "18562", { "lowest.health <= 75", "lowest.buff(774)", }, "lowest" }, --Swift mend if player has rejuv buff and is below 70%
 { "18562", { "lowest.health <= 75", "lowest.buff(8936)", }, "lowest" }, --Swiftmend if player has regrowth buff and is below 70%
 { "48438", "@coreHealing.needsHealing(90, 3)", "lowest" }, --Wild Growth if 3 raid members are under 90%
 { "8936", { "lowest.health <= 50", "!lowest.buff(8936)", }}, -- Regrowth lowest raid member if health is below 50% and doesnt have a regrowth buff
 { "774", { "lowest.health <= 85", "!lowest.buff(774)", }}, --Rejevenate lowest raid memeber if health is below 85% and doesnt have rejuv buff
-{ "50464", "lowest.health < = 90" }, -- Nourish if target health below 90%
+{ "50464", { "!player.buff(100977)", "focus.health <= 100" }}, -- noruish to keep up H
+{ "50464", "lowest.health <= 90" }, -- Nourish if target health below 90%
 
 
 }, "lowest.range < 40", },
