@@ -8,7 +8,7 @@ ProbablyEngine.rotation.register_custom(266, "DemonicKoha", {
 
 
 --Rotation Shared
-{ "Command Demon", { "pet.energy > 60", "modifier.multitarget", }},
+{ "Command Demon", "modifier.multitarget" },
 { "Curse of Elements", "!target.debuff(Curse of Elements)" },
 --Rotation Meta
 { "Metamorphosis", { "player.demonicfury >= 970", "target.debuff(Corruption).duration >= 10", }},
