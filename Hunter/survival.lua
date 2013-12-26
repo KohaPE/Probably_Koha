@@ -20,6 +20,7 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
     "!target.alive", 
 	"!target.enemy",
 	"!target.exists",
+	"target.range < 10",
   }},
 
 --Racial Cooldowns

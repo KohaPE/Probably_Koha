@@ -20,6 +20,7 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
     "!target.alive", 
 	"!target.enemy",
 	"!target.exists",
+	"target.range < 10",
   }},
 
 --Racial Cooldowns
@@ -29,6 +30,9 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
 -- Pet
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.alive" },
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.exists" },
+	
+	{ "Misdirection", { "focus.exists", "!player,buff(Misdirection)", "target.threat > 60" }, "focus" },
+    { "Misdirection", { "pet.exists", "!player,buff(Misdirection)", "!focus.exists", "target.threat > 85" }, "pet" },
 
 -- Traps
 	{ "Explosive Trap", "modifier.alt", "ground" },
@@ -53,7 +57,6 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
     { "Rapid Fire", "modifier.cooldowns" },
     { "Bestial Wrath", "modifier.cooldowns" },
     { "Rabid", {
-    "player.spell(Bestial Wrath).exsists",
     "player.buff(The Beast Within)",
     "modifier.cooldowns",
     }},
@@ -92,10 +95,9 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
 },
 {
 --Buffs
-{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", "modifier.shift" },
+{ "!/cast [@focus, help] [@pet, nodead, exists] Misdirection", { "!player.buff(Misdirection)", "modifier.shift" }},
 -- Pet Survival
 { "Mend Pet", { "pet.health <= 80", "pet.exists", "!pet.buff(Mend Pet)" }},
-{ "Aspect of the Cheetah", { "!player.buff(Aspect of the Cheetah)", "player.moving" }},
 { "Aspect of the Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 { "Aspect of the Iron Hawk", { "!player.moving", "!player.buff(Aspect of the Hawk)", "!player.buff(Aspect of the Iron Hawk)", }},
 
