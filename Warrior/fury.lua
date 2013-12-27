@@ -6,7 +6,7 @@ ProbablyEngine.rotation.register_custom(72, "KohasFury", {
 --Cooldowns
 
 --Heroic Leap
-{ "Heroic Leap", "modifier.shit", "ground", },
+{ "Heroic Leap", "modifier.shift", "ground", },
 
 --Shared rotation
 { "Colossus Smash" },
