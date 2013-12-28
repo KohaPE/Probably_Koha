@@ -244,4 +244,31 @@ ProbablyEngine.library.register('mistweaver', {
 
     return false
   end,
+  ProbablyEngine.library.register('symbiosis', {
+  castOn = function (...)
+    local length = select('#', ...)
+    if length == 0 then return false end
+
+    for i = 1, length do
+      local class = select(i, ...)
+      local classID
+      if tonumber(class) then
+        classID = tonumber(class)
+      else
+        classID = classNames[class:lower()] 
+      end
+
+      if classID then
+        for _, unit in pairs(ProbablyEngine.raid.roster) do
+          if unit.class == classID then
+            ProbablyEngine.dsl.parsedTarget = unit.unit
+            return true
+          end
+        end
+      end
+    end
+    
+    return false
+  end
+  
 })
