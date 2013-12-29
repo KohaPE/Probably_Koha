@@ -87,11 +87,7 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
   { "Quaking Palm", "target.casting" },
   
   --================================================================================--
-  
-  -- Additional Out of Combat Racials
-  
-  -- Worgen
-  { "Two Forms" },
+ 
 
 -- ProbablyEngine Rotation Packager
 -- Custom Resto Druid Rotation
