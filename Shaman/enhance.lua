@@ -22,13 +22,13 @@ ProbablyEngine.rotation.register_custom(263, "Koha's Enhance Shamen", {
 { "Lightning Sheild", "!player.buff" },
 
 --Interupts
-{ "Wind Shear", "modifier.interupt" },
+{ "Wind Shear", "modifier.interrupt" },
 
 --Totems
 { "Healing Stream Totem", "player.health < 90" },
 
 --Cooldowns
-{ "Ascendance", "modifier.cooldowns" },
+{ "Ascendance", { "!player.buff(Ascendance)", "modifier.cooldowns" }},
 { "Bloodlust", { "modifier.cooldowns","!debuff.any(Sated)" }},
 { "Fire Elemental Totem", "modifier.cooldowns" },
 { "Earth Elemental Totem", "modifier.cooldowns" },
@@ -42,7 +42,7 @@ ProbablyEngine.rotation.register_custom(263, "Koha's Enhance Shamen", {
 { "Magma Totem", { "!player.totem(Magma Totem)", "!player.totem(Fire Elemental)", "!modifer.cooldowns", "modifier.multitarget", }},
 
 
---Shared Rotation
+--Shared Rotationw
 { "Unleash Elements" },
 { "Flame Shock", { "!target.debuff(Flame Shock)", "player.buff(Unleash Flame)", }},
 { "Flame Shock", "target.debuff(Flame Shock).duration < 7" },
@@ -72,7 +72,7 @@ ProbablyEngine.rotation.register_custom(263, "Koha's Enhance Shamen", {
 {
 { "Windfury Weapon", "!player.enchant.mainhand" },
 { "Flametongue Weapon", "!player.enchant.offhand" },
-{ "Lightning Sheild", "!player.buff" },
+{ "Lightning Shield", "!player.buff" },
 
 
 }, function()
