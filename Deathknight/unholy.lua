@@ -66,7 +66,7 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 { "Death Coil", "player.buff(Sudden Doom)" },
 { "Death Coil", "player.runicpower >= 32"},
 { "Soul Reaper", { "!modifier.last(Soul Reaper)", "!target.debuff(Soul Reaper)", "target.health < 35" }},
-{ "Necrotic Strike" },
+{ "Necrotic Strike", "player.runes(Death).count >= 1" },
 { "Festering Strike", { "player.runes(Blood).count >= 1", "player.runes(frost).count >= 1", }},
 { "Scourge Strike" },
 { "45529", "player.buff(114851).count >= 5" },
