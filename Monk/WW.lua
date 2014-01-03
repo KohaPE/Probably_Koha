@@ -38,8 +38,9 @@ ProbablyEngine.rotation.register_custom(269, "KohasWindWalker", {
 { "Energizing Brew", { "player.energy < 20", "player.spell(Fists of Fury).cooldown" }},
 { "Touch of Karma", "player.health < 90" },
 { "Grapple Weapon", "modifier.alt" },
-{{
 --Rotation Single Target/multi target
+{{
+{ "Rushing Jade Wind", { "modifier.multitarget", "!player.buff(Rushing Jade Wind)" }},
 { "Spinning Crane Kick", { "modifier.multitarget", "!player.buff(Rushing Jade Wind)" }},
 { "Rising Sun Kick" },
 { "Tiger Palm", "player.buff(Combo Breaker: Tiger Palm)" },
@@ -47,8 +48,9 @@ ProbablyEngine.rotation.register_custom(269, "KohasWindWalker", {
 { "Fists of Fury", { "player.energy <= 40", "player.buff(Tiger Power).duration > 5", "!player.moving", "!player.buff(Energizing Brew)" }},
 { "Blackout Kick", "player.buff(Combo Breaker: Blackout Kick)" },
 { "Blackout Kick", "player.chi >= 3" },
+{ "Spinning Crane Kick", "modifier.multitarget" },
 { "Jab" },
-}, "player.range <= 5" },
+}, "target.range <= 8" },
 
 
 -- Out Of Combat
