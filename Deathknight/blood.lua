@@ -15,7 +15,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 { "Plague Strike", "!target.debuff(Blood Plague)" },
 }, "toggle.pvp" },
 
-{{
+{{ --Non Pvp Toggle
 --Trinket Procs
 { "#gloves" },
 	{ "#trinket1" },
@@ -44,7 +44,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 
 -- hard cast dnd
   	{ "43265", "modifier.shift", "ground" }, --Death n Decay
-{ "48721", "modifier.alt" }, --Blood Boil
+{ "Blood Boil", "modifier.alt" }, --Blood Boil
 
 --Interupts
 	{ "47528", "modifier.interrupts" },  --MindFreeze
@@ -64,25 +64,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
   	{ "48982", "player.health < 40" }, --RuneTap
   	{ "47568", "player.health < 40" }, --ERW
 
-	
-	{ "Blood Boil", { 
-	"modifier.multitarget",
-	"player.buff(Crimson Scourge)",
-	"target.range <= 8",
-	}},
-	
-	{ "56815", "player.runicpower >= 80" },
 
---Dots Tracking
-	{ "Outbreak", "!target.debuff(Frost Fever)" },
-	{ "Blood Boil", {
-	 "target.range <= 8",
-	"target.debuff(Frost Fever).duration < 4",
-	"target.debuff(Blood Plague).duration < 4", }},
-	{ "Icy Touch", "!target.debuff(Frost Fever)" },
-	{ "Plague Strike", "!target.debuff(Blood Plague)" },
-	{ "48721", { "target.debuff(Blood Plague)", "player.runes(blood).count = 2" }},
-	
 
 -- defensive
   	{ "49222", "!player.buff" }, --Bone Shield
@@ -90,32 +72,45 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 -- Taunts
   	{ "56222", "modifier.taunt" }, --Dark Command
   	{ "49576", "modifier.taunt" }, --Death Grip
-  	{ "114866", "target.health < 35" }, --Soul Reaper
-	{ "56815", "player.runicpower > 90" },
+	
+	-- Dot Tracking
+  { "Outbreak", "target.debuff(Frost Fever).duration < 3", "target.debuff(Blood Plague).duration <3", "target" },
+  { "Blood Boil", "player.runes(blood).count > 1","target.debuff(Frost Fever).duration < 3", "target.debuff(Blood Plague).duration <3" },
+  { "Blood Boil", "player.runes(death).count > 1","target.debuff(Frost Fever).duration < 3", "target.debuff(Blood Plague).duration <3" },  
+  { "Icy Touch", "target.debuff(Frost Fever).duration < 3" },
+  { "Plague Strike", "target.debuff(Blood Plague).duration < 3" },
+  { "Rune Strike", "player.runicpower > 90" },
+  { "Blood Boil", { "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", "player.buff(Crimson Scourge)" }},
 
 --Rotation AOE
-	{ "49998" }, --Death Strike
-	{ "48721", { --Bloodboil
-	"modifier.multitarget",
-	"player.runes(blood).count >= 1",
-	"target.range <= 8",
-	"target.debuff(Frost Fever)",
-	"target.debuff(Blood Plague)",
-	}},
-	
+{{
+{ "Death Strike", "!player.buff(Blood Shield)" },
+{ "Death Strike", "player.buff(Blood Shield).duration < 5" },
+{ "Blood Boil", { "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", "player.runes(Death).count >= 1" }},
+{ "Blood Boil", { "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", "player.runes(Blood).count >= 1" }},
+{ "Blood Tap", "player.buff(Blood Charge).count >= 5" },
+{ "Rune Strike", "player.runicpower > 30" },
+}, "modifier.multitarget" },
 
--- Rotation Single Target
-{ "48721", { --Blood Boil
-	"player.buff(81141)",
-	"target.range <= 5"
-	}},
-	{ "48721", "player.runes(blood).count = 2" },
-	{ "55050", { "player.runes(blood).count >= 1", "!modifier.multitarget", }}, --Heart Strike
-	{ "49998" }, --Death Strike
-	{ "114866", "target.health < 35" }, --Soul Reaper
-	{ "56815" }, --Rune Strike
-	{ "45529", "player.buff(114851).count >= 5" }, --BloodTap
-	{ "57330" }, --Horn of Winter
+--Single Target Rotation
+{{
+{ "Death Strike", "!player.buff(Blood Shield)" },
+{ "Death Strike", "player.buff(Blood Shield).duration < 5" },
+{ "Heart Strike", "player.runes(Death).count >= 1" },
+{ "Heart Strike", "player.runes(Blood).count >= 1" },
+{ "Soul Reaper", {
+"!modifier.multitarget",
+"player.buff(Blood Shield)", 
+"!target.debuff(Soul Reaper)", 
+"!modifier.last(Soul Reaper)", 
+"target.health < 35", 
+"player.runes(Death).count >= 1" 
+}},
+{ "Death Strike" },
+{ "Blood Tap", "player.buff(Blood Charge).count >= 5" },
+{ "Runic Strike", "player.runicpower > 30" },
+}, "!modifier.multitarget" },
+
 }, "!toggle.pvp" },
 
 -- Out Of Combat
