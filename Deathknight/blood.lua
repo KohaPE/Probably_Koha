@@ -81,6 +81,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
   { "Plague Strike", "target.debuff(Blood Plague).duration < 3" },
   { "Rune Strike", "player.runicpower > 90" },
   { "Blood Boil", { "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", "player.buff(Crimson Scourge)" }},
+  { "Horn of Winter", "player.runicpower < 30" },
 
 --Rotation AOE
 {{
@@ -90,6 +91,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 { "Blood Boil", { "target.debuff(Frost Fever)", "target.debuff(Blood Plague)", "player.runes(Blood).count >= 1" }},
 { "Blood Tap", "player.buff(Blood Charge).count >= 5" },
 { "Rune Strike", "player.runicpower > 30" },
+{ "Horn of Winter", "player.runicpower < 30" },
 }, "modifier.multitarget" },
 
 --Single Target Rotation
@@ -108,7 +110,7 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 }},
 { "Death Strike" },
 { "Blood Tap", "player.buff(Blood Charge).count >= 5" },
-{ "Runic Strike", "player.runicpower > 30" },
+{ "Rune Strike", "player.runicpower > 30" },
 }, "!modifier.multitarget" },
 
 }, "!toggle.pvp" },
