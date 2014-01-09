@@ -3,6 +3,8 @@
 -- Created on Nov 3rd 2013 6:30 am
 ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 
+{ "Blood Boil", "modifier.alt" },
+
 --PVP
 {{
 
@@ -50,7 +52,7 @@ ProbablyEngine.rotation.register_custom(252, "DKUnholyKoha", {
 --Dots
 { "Outbreak", { "!target.debuff(Frost Fever)", "!target.debuff(Blood Plague)", }},
 { "Icy Touch", { "player.range < 10", "!target.debuff(Frost Fever)" }},
-{ "Plague Strike", { "player.range <=8", "!target.debuff(Blood Plague)" }},
+{ "Plague Strike", { "player.range <= 8", "!target.debuff(Blood Plague)" }},
 { "Dark Transformation" },
 
 --AoE Rotation
