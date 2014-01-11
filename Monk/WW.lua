@@ -4,6 +4,8 @@
 -- Created on Nov 18th 2013 10:23 am
 ProbablyEngine.rotation.register_custom(269, "KohasWindWalker", {
 
+{ "!/cast [@mouseover,harm,exists][] storm, earth, and fire", { "!target", "modifier.control" }},
+
 --Buff
 	{ "Legacy of the Emperor", {
 		"!player.buff(Legacy of the Emperor)",
@@ -23,7 +25,7 @@ ProbablyEngine.rotation.register_custom(269, "KohasWindWalker", {
 { "Charging Ox Wave" },
 { "Ring of Peace", "player" },
 }, "modifier.interrupts", },
-{ "!/cast [@mouseover,harm,exists][] storm, earth, and fire", "modifier.control" },
+
 
 --Self Healing T2
 { "Zen Sphere", "!player.buff(Zen Sphere)", "player" },

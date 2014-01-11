@@ -31,6 +31,43 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 --Racial Cooldowns
 	{ "26297", { "player.spell(26297).exists", "modifier.cooldowns" }}, --Berserking
 	{ "20572", { "player.spell(20572).exists", "modifier.cooldowns" }}, --Blood Fury
+	
+	-----------------------------------------------------------------------------------------------------------------------------
+-- 5.3 autotaunt Events --------------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------
+{ "Dark Command", { "target.name(Feng the Accursed)", "!player.debuff(Shadowburn)", "focus.debuff(Shadowburn).count >= 4", "toggle.autotaunt" }},
+{ "Dark Command", { "target.name(Blade Lord Ta'yak)", "!player.debuff(Overwhelming Assault)", "focus.debuff(Overwhelming Assault).count >= 1", "toggle.autotaunt" }},
+{ "Dark Command", { "target.name(Grand Empress Shek'zeer)", "!player.debuff(Eyes of the Empress)", "focus.debuff(Eyes of the Empress).count <= 4", "toggle.autotaunt" }},
+{ "Dark Command", { "target.name(Tsulong)", "!player.debuff(Shadow Breath)", "focus.debuff(Shadow Breath).count >= 1", "toggle.autotaunt"}},
+{ "Dark Command", { "target.name(Lei Shi)", "!player.debuff(Spray)", "focus.debuff(Spray).count >= 13", "toggle.autotaunt"}},
+{ "Dark Command", { "target.name(Jin’rokh the Breaker)", "!player.debuff(Static Wound)", "focus.debuff(Static Wound).count >= 1", "toggle.autotaunt"}},
+{ "Dark Command", { "target.name(Ji-Kun)", "!player.debuff(Talon Rake)", "focus.debuff(Talon Rake).count >= 2", "toggle.autotaunt"}},
+{ "Dark Command", { "target.name(Durumu the Forgotten)", "!player.debuff(Serious Wound)", "focus.debuff(Serious Wound).count >= 3", "toggle.autotaunt"}},
+{ "Dark Command", { "target.name(Primordius)", "!player.debuff(Malformed Blood)", "focus.debuff(Malformed Blood).count >= 5", "toggle.autotaunt"}},
+{ "Dark Command", { "target.name(Iron Qon)", "!player.debuff(Impale)", "focus.debuff(Impale).count >= 2", "toggle.autotaunt"}},
+{ "Dark Command", { "target.id(68904)", "!player.debuff(Fan of Flames)", "focus.debuff(Fan of Flames).count >= 2", "toggle.autotaunt"}},
+{ "Dark Command", { "target.id(68397)", "!player.debuff(Decapitate)", "focus.debuff(Decapitate).count >= 1", "toggle.autotaunt"}},
+{ "Dark Command", { "target.id(68397)", "!player.debuff(Fusion Slash)", "focus.debuff(Fusion Slash).count >= 1", "toggle.autotaunt"}},
+{ "Dark Command", { "target.id(68397)", "!player.debuff(Overwhelming Power)", "focus.debuff(Overwhelming Power).count >= 1", "toggle.autotaunt"}},
+
+	
+-----------------------------------------------------------------------------------------------------------------------------
+-- SoO autotaunt Events --------------------------------------------------------------------------------------------------------- 
+-----------------------------------------------------------------------------------------------------------------------------
+{ "Dark Command", {"target.id(71543)", "!player.debuff(143436)", "focus.debuff(143436).count >= 1", "toggle.autotaunt"}},         -- Immerseus 1 Stack
+{ "Dark Command", {"target.id(72276)", "!player.debuff(146124)", "focus.debuff(146124).count >= 4", "toggle.autotaunt"}},         -- Norushen 4 Stacks
+{ "Dark Command", {"target.id(71734)", "!player.debuff(144358)", "focus.debuff(144358).count >= 1", "toggle.autotaunt"}},         -- Sha of Pride 1 Stack
+{ "Dark Command", {"target.id(71466)", "!player.debuff(144467)", "focus.debuff(144467).count >= 3", "toggle.autotaunt"}},         -- Iron Juggernaut 3 Stacks
+{ "Dark Command", {"target.id(71859)", "!player.debuff(144215)", "focus.debuff(144215).count >= 5", "toggle.autotaunt"}},         -- Dark Shamans 5 Stacks
+        { "Dark Command", {"target.id(71515)", "!player.debuff(143494)", "focus.debuff(143494).count >= 3", "toggle.autotaunt"}},         -- Nazgrim 3 Stacks
+        { "Dark Command", {"target.id(71454)", "!player.debuff(142990)", "focus.debuff(142990).count >= 13", "toggle.autotaunt"}},         -- Malkorok 13 Stacks
+        { "Dark Command", {"target.id(71504)", "!player.debuff(143385)", "focus.debuff(143385).count >= 3", "toggle.autotaunt"}},                -- Blackfuse 3 Stacks !!!
+        { "Dark Command", {"target.id(71529)", "!player.debuff(143426)", "focus.debuff(143426).count >= 3", "toggle.autotaunt"}},         -- Thok 3 Stacks Fearsome Roar
+        { "Dark Command", {"target.id(71529)", "!player.debuff(143780)", "focus.debuff(143780).count >= 3", "toggle.autotaunt"}},         -- Thok 3 Stacks Acid Breath
+        { "Dark Command", {"target.id(71529)", "!player.debuff(143773)", "focus.debuff(143773).count >= 3", "toggle.autotaunt"}},         -- Thok 3 Stacks Freezing Breath
+        { "Dark Command", {"target.id(71865)", "!player.debuff(145183)", "focus.debuff(145183).count >= 3", "toggle.autotaunt"}},         -- Garrosh 3 Stacks Gripping Despair
+        { "Dark Command", {"target.id(71865)", "!player.debuff(145195)", "focus.debuff(145195).count >= 3", "toggle.autotaunt"}},         -- Garrosh 3 Stacks Empowered Gripping Despair
+
 
 --Cooldowns
 	{ "46584", "modifier.cooldowns" }, --Raise Dead
@@ -125,4 +162,5 @@ ProbablyEngine.rotation.register_custom(250, "DKBloodKoha", {
 { "43265", "modifier.shift", "ground" }, --Death and Decay
 }, function ()
  ProbablyEngine.toggle.create('pvp', 'Interface\\Icons\\Spell_Shadow_Nethercloak', 'Player Vs Player', '')
+ ProbablyEngine.toggle.create('autotaunt', 'Interface\\Icons\\Ability_Monk_Provoke', 'Auto Taunt', 'Toggle Auto Taunting for Bosses.')
 end)
