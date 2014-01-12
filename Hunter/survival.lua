@@ -31,8 +31,8 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.alive" },
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.exists" },
 	
-	{ "Misdirection", { "focus.exists", "!player,buff(Misdirection)", "target.threat > 60" }, "focus" },
-    { "Misdirection", { "pet.exists", "!player,buff(Misdirection)", "!focus.exists", "target.threat > 85" }, "pet" },
+{ "Misdirection", { "focus.exists", "!modifier.last(Misdirection)", "!player,buff(Misdirection)", "target.threat > 60" }, "focus" },
+    { "Misdirection", { "pet.exists", "!modifier.last(Misdirection)", "!player,buff(Misdirection)", "!focus.exists", "target.threat > 85" }, "pet" },
 
 -- Traps
 	{ "Explosive Trap", "modifier.alt", "ground" },
@@ -89,13 +89,10 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 
 -- Single Target
 { "Arcane Shot", "player.focus > 70" },
-{ "Explosive Shot", "player.focus >= 45" },
-{ "Serpent Sting", { "!modifier.last(Serpent Sting)", "!target.debuff(Serpent Sting)" }},
+{ "Serpent Sting", { "!modifier.last(Serpent Sting)", "!modifier.multitarget", "!target.debuff(Serpent Sting)" }},
+{ "Explosive Shot" },
+{ "Arcane Shot", { "player.focus > 20", "player.buff(Thrill of the Hunt).count >= 1", }},
 { "Black Arrow", "!target.debuff(Black Arrow)" },
-{ "Arcane Shot", {
- "player.focus > 60",
- "player.buff(Thrill of the Hunt)",
- }},
 { "Glaive Toss" },
 { "Powershot" },
 { "Cobra Shot" },

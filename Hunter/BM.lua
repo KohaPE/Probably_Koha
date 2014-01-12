@@ -31,8 +31,8 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.alive" },
 	{ "!/cast [@pet,dead] Revive Pet; Call Pet 1", "!pet.exists" },
 	
-	{ "Misdirection", { "focus.exists", "!player,buff(Misdirection)", "target.threat > 60" }, "focus" },
-    { "Misdirection", { "pet.exists", "!player,buff(Misdirection)", "!focus.exists", "target.threat > 85" }, "pet" },
+	{ "Misdirection", { "focus.exists", "!modifier.last(Misdirection)", "!player,buff(Misdirection)", "target.threat > 60" }, "focus" },
+    { "Misdirection", { "pet.exists", "!modifier.last(Misdirection)", "!player,buff(Misdirection)", "!focus.exists", "target.threat > 85" }, "pet" },
 
 -- Traps
 	{ "Explosive Trap", "modifier.alt", "ground" },
@@ -73,18 +73,20 @@ ProbablyEngine.rotation.register_custom(253, "BMKoha", {
 
 
 -- AoE
-{ "Multi-Shot", {
-"player.focus > 40",
-"modifier.multitarget",
-}},
+{{
+{ "Barrage", "modifier.multitarget" },
+{ "Multi-Shot", { "player.buff(Thrill of the Hunt)", "player.focus >= 20", }},
+{ "Multi-Shot", "player.focus > 40" },
 { "Cobra Shot", "modifier.multitarget" },
+}, "modifier.multitarget" },
 
 --Rotation
 --Single Target
 {{
+{ "Serpent Sting", { "!modifier.last(Serpent Sting)", "!target.debuff(Serpent Sting)" }},
 { "Dire Beast", "player.spell(Dire Beast).usable" },
 { "Kill Command", "player.focus > 40" },
-{ "Serpent Sting", "!target.debuff(Serpent Sting)" },
+{ "Arcane Shot", { "player.buff(Thrill of the Hunt).count >= 1", "player.focus >= 10", }},
 { "Arcane Shot", "player.focus > 60" },
 { "Powershot" },
 { "Cobra Shot", "player.focus < 100" },
