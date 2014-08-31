@@ -93,16 +93,6 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 -- Custom Resto Druid Rotation
 -- Created on Nov 2nd 2013 1:03 am
 
-  { "Treant Form", {
-    "!player.buff(Cat Form)", 
-    "!player.buff(Bear Form)", 
-    "!player.buff(Travel Form)", 
-    "!player.buff(Aquatic Form)", 
-   "!player.buff(Flight Form)", 
-   "!player.buff(Swift Flight Form)",
-   	"!player.buff(Treant Form)",
- },"player" },
-
 
 --Innervate
 { "29166", "player.mana < 80", "player" }, --Innervate if player's mana is lower then 80%
@@ -136,8 +126,8 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 { "88423", "@coreHealing.needsDispelled(Lingering Corruption)" },-- Lingering Corruption (Norushen)
 { "88423", { "player.buff(144359)", "@coreHealing.needsDispelled(Mark of Arrogance)" }}, -- Mark of Arrogance (Sha of Pride) 
 { "88423", "@coreHealing.needsDispelled(Corrosive Blood)" },  -- Corrosive Blood (Thok)
-{ "8936", { "lowest.health < 100", "!lowest.buff(8936)" }, "target.id(71604)" },
-{ "5185", { "lowest.health < 100", "lowest.buff(8936)", }, "target.id(71604)" },
+{ "88423", { "lowest.health < 100", "!lowest.buff(8936)" }, "target.id(71604)" },
+{ "88423", { "lowest.health < 100", "lowest.buff(8936)", }, "target.id(71604)" },
 
 --Mouseover
   { "Rebirth", "!mouseover.alive", "mouseover" },
@@ -151,22 +141,23 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 --Tank Healing
 { "33763", { "tank.buff(33763) <= 3", "tank.buff(33763).count <= 2" }, "tank" }, --LifeBloom if tank/focus missing 3 stacks of life Bloom
 { "33763", "focus.buff(33763).duration <= 3", "focus" }, --LifeBloom if 3 seconds left so stacks dont fall off.
-{ "8936", { "focus.health <= 45", "!focus.buff(8936)", }}, --Regrowth tank if health is under 45% and hasn't got a regrowth on.
+{ "8936", { "focus.health <= 45", "!focus.buff(8936)", "!moving" }}, --Regrowth tank if health is under 45% and hasn't got a regrowth on.
 
 --Healing
 { "145518", { "@coreHealing.needsHealing(70, 3)", "lowest.buff(774)", "!modifer.last(145518)", }}, --Genesis if 3 players below 70 and have the buff rejv
-{ "145205", "@coreHealing.needsHealing(98, 5)" },
-{ "102693", { "@coreHealing.needsHealing(70, 3)", "!modifier.last(106737)" }, "lowest" }, --Force of Nature if player is below 97%
+{ "145205", { "@coreHealing.needsHealing(98, 2)", "toggle.AM" }}, -- Wild Mushrooms
+{ "Wild Mushroom: Bloom", { "@coreHealing.needsHealing (90, 2)", "toggle.AM" }},
+{ "102693", { "@coreHealing.needsHealing(98, 1)", "!modifier.last(106737)" }, "lowest" }, --Force of Nature if player is below 97%
 { "18562", { "lowest.health <= 85", "lowest.buff(774)", }, "lowest" }, --Swift mend if player has rejuv buff and is below 70%
 { "18562", { "lowest.health <= 85", "lowest.buff(8936)", }, "lowest" }, --Swiftmend if player has regrowth buff and is below 70%
-{ "48438", "@coreHealing.needsHealing(90, 3)", "lowest" }, --Wild Growth if 3 raid members are under 90%
+{ "48438", "@coreHealing.needsHealing(96, 3)", "lowest" }, --Wild Growth if 3 raid members are under 90%
 { "8936", { "lowest.health <= 50", "!lowest.buff(8936)", }}, -- Regrowth lowest raid member if health is below 50% and doesnt have a regrowth buff
-{ "774", { "lowest.health <= 85", "!lowest.buff(774)", }}, --Rejevenate lowest raid memeber if health is below 85% and doesnt have rejuv buff
-{ "50464", { "!player.buff(100977)", "focus.health <= 100" }}, -- noruish to keep up H
-{ "50464", "lowest.health <= 90" }, -- Nourish if target health below 90%
+{ "774", { "lowest.health <= 85", "!lowest.buff(774)", }}, --Rejevenate lowest raid memeber if health is below 85% and doesnt have rejuv buffWWWWWWWWW
 
 
 }, "lowest.range < 40", },
+
+{ "Wrath", { "focustarget.exists", "toggle.DPS" }, "focustarget" },
 
   -- Oh Shit Healing Start
   { "Incarnation: Tree of Life", "@coreHealing.needsHealing(60,4)" },
@@ -180,21 +171,35 @@ ProbablyEngine.rotation.register_custom(105, "The Tree of Life", {
 },
 {
 --Buffs
-{ "1126", "!player.buff(1126)" }, --Mark of the Wild if missing buff
-{ "145205", "modifier.shift", "mouseover" }, --Mushroom Placement
-{ "33763", { "tank.buff(33763) <= 3", "tank.buff(33763).count <= 2" }, "tank" },
-
-
- -- Basic Buffing
-  { "Treant Form", {
-    "!player.buff(Cat Form)", 
+{ "Mark of the Wild", { 
+	"!player.buff(Mark of the Wild)",
+	"!player.buff(Cat Form)", 
     "!player.buff(Bear Form)", 
     "!player.buff(Travel Form)", 
     "!player.buff(Aquatic Form)", 
     "!player.buff(Flight Form)", 
     "!player.buff(Swift Flight Form)", 
 	"!player.buff(Treant Form)",
-  }, "player" },
+    "!player.buff(117666)", -- Legacy of the Emperor Buff
+    "!player.buff(1126)", -- Mark of the Wild
+    "!player.buff(90363)", -- Embrace of the Shale Spider
+    "!player.buff(20217)" -- Blessing of Kings
+    --Mark of the Wild if missing buff
+}},
+{ "145205", "modifier.shift", "mouseover" }, --Mushroom Placement
+{ "33763", { "!tank.buff(33763)", "tank.health < 100" }, "tank" }, -- lifebloom to get into combat
 
 
-})
+
+}, function()
+ProbablyEngine.toggle.create(
+    'DPS',
+    'Interface\\Icons\\SPELL_NATURE_WRATHV2.png‎',
+    'Dream Of Cenarius',
+	'Enable or Disable usage of Dream of Cenarious Smart Heal')
+ProbablyEngine.toggle.create(
+    'AM',
+    'Interface\\Icons\\DRUID_ABILITY_WILDMUSHROOM_A.png‎',
+    'Auto Mushrooms',
+	'Enable or Disable usage of Automatic Mushroom Placement. Default Set to manual.')
+end)

@@ -30,7 +30,7 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 
 --Totems
 { "Healing Stream Totem", { "@coreHealing.needsHealing(98, 2)" }, "lowest" },
-{ "Healing Tide Totem", { "@coreHealing.needsHealing(60, 3)" }, "lowest" },
+{ "Healing Tide Totem", { "@coreHealing.needsHealing(80, 7)" }, "lowest" },
 { "Mana Tide Totem", "player.mana < 30" },
 { "Totemic Recall", { "player.glyph(41535).exists", "player.totem(Healing Stream Totem).duration <= 2", }},
 { "Lightning Bolt", { "lowest.health > 50", "player.mana < 15" }},
@@ -60,12 +60,12 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 
 {{
 --Heavy Healing
-{ "Riptide", { "lowest.health < 99", "!lowest.buff(Riptide)" }, "lowest" },
+{ "Riptide", { "lowest.health < 96", "!lowest.buff(Riptide)" }, "lowest" },
 { "Healing Surge", "lowest.health < 40", "lowest" },
 
 --Moderate Healing
 
-{ "Chain Heal", "@coreHealing.needsHealing(94, 3)", "lowest" },
+{ "Chain Heal", "@coreHealing.needsHealing(92, 4)", "lowest" },
 { "Greater Healing Wave", "lowest.health < 60", "lowest" },
 
 
@@ -75,9 +75,14 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 }, "!lowest.range > 40" },
 
 {{
-{ "Lightning Bolt", "!target.range > 29" },
-}, "toggle.dps" },
+  { "Searing Totem", { "!player.totem(Fire Elemental Totem)", "!player.totem(Searing Totem)" } },
+  { "Flame Shock", { "focustarget.debuff(Flame Shock).duration <= 3", "focustarget.exists" }, "focustarget" },
+  { "Lava Burst", { "focustarget.exists" }, "focustarget" },
 
+}, "toggle.dps2" },
+{{
+  { "Lightning Bolt", { "focustarget.exists" }, "focustarget" },
+}, "toggle.dps" },
 
 
 },
@@ -93,5 +98,6 @@ ProbablyEngine.rotation.register_custom(264, "Koha's Resto Shamen", {
 
 }, function()
 ProbablyEngine.toggle.create('dps', 'Interface\\Icons\\spell_nature_lightning', 'DPS', 'Toggle for Lightning Bolt Mana Return')
+ProbablyEngine.toggle.create('dps2', 'Interface\\Icons\\spell_shaman_lavaburst', 'DPS', 'Toggle For Dps Lavabolt + Totems')
 
 end)

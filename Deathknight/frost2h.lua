@@ -161,14 +161,14 @@ ProbablyEngine.rotation.register_custom(251, "Frost2HKoha", {
 	{ "49143", "modifier.multitarget" }, --Frost Strike
 
 --Single
-{ "49020", { "player.runes(Frost).count >= 1", "player.runes(Death).count >= 1", }}, --Obliterate
-	{ "49020", "player.runes(Death).count >= 2" }, --Obliterate
+{ "Obliterate", { "player.runes(Frost).count >= 1", "player.runes(Death).count >= 1", }}, --Obliterate
+	{ "Obliterate", "player.runes(Death).count >= 2" }, --Obliterate
 	{ "49143", "player.runicpower > 70" }, --Frost Strike
 { "130735", "target.health < 30" }, --Soul Reaper
    { "49184", "player.buff(59052)" }, --Howling Blast
-    { "49184", "player.buff(59057)" }, --Howling Blast
-    { "49020", "player.buff(51128)" }, --Obliterate
-    { "49020" }, --Obliterate
+    { "49184", "player.buff(59052)" }, --Howling Blast
+    { "Obliterate", "player.buff(51124)" }, --Obliterate
+    { "Obliterate" }, --Obliterate
     { "57330" }, --Horn of Winter
     { "49143" }, --Frost Strike
     { "45529", "player.buff(114851).count >= 5" }, --Blood Tap

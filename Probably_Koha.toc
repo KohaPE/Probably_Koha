@@ -20,6 +20,7 @@ Shaman\resto.lua
 Shaman\enhance.lua
 Shaman\enhanceM.lua
 Paladin\Holy.lua
+Paladin\Prot.lua
 Monk\brewmaster.lua
 Monk\WW.lua
 Monk\LW.lua

@@ -67,6 +67,7 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 
 
 --Shared Rotation
+{ "Rapid Fire", "player.buff(144637)" },
 { "Kill Shot", { "target.health <= 20", "player.range <= 40" }},
     { "Explosive Shot", "player.buff(Lock and Load)" },
     { "Fervor", {
@@ -88,11 +89,11 @@ ProbablyEngine.rotation.register_custom(255, "HunterSVKoha", {
 }},
 
 -- Single Target
-{ "Arcane Shot", "player.focus > 70" },
+{ "Arcane Shot", "player.focus > 80" },
 { "Serpent Sting", { "!modifier.last(Serpent Sting)", "!modifier.multitarget", "!target.debuff(Serpent Sting)" }},
 { "Explosive Shot" },
-{ "Arcane Shot", { "player.focus > 20", "player.buff(Thrill of the Hunt).count >= 1", }},
 { "Black Arrow", "!target.debuff(Black Arrow)" },
+{ "Arcane Shot", { "player.focus >= 20", "player.buff(Thrill of the Hunt).count >= 1", }},
 { "Glaive Toss" },
 { "Powershot" },
 { "Cobra Shot" },

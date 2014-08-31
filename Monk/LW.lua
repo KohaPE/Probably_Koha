@@ -1,11 +1,25 @@
--- ProbablyEngine Rotation Packager
--- Custom Profile using Tao's Healing lodgic i've added my version of fist and Lightning weaving to it.
+--Raid Healing Code
+
+ProbablyEngine.library.register('coreHealing', {
+  needsHealing = function(percent, count)
+    return ProbablyEngine.raid.needsHealing(tonumber(percent)) >= count
+  end,
+  needsDispelled = function(spell)
+    for unit,_ in pairs(ProbablyEngine.raid.roster) do
+      if UnitDebuff(unit, spell) then
+        ProbablyEngine.dsl.parsedTarget = unit
+        return true
+      end
+    end
+  end,
+})
+
 ProbablyEngine.rotation.register_custom(270, "Koha's Mist", {
 
 -- Trinkets
- { "#gloves" },
- { "#trinket1" },
- { "#trinket2" },
+ { "#gloves", "!player.casting" },
+ { "#trinket1", "!player.casting"  },
+ { "#trinket2", "!player.casting"  },
 -- Interrupts
   { "Spear Hand Strike", "modifier.interrupts" },
 
@@ -21,38 +35,28 @@ ProbablyEngine.rotation.register_custom(270, "Koha's Mist", {
 -- Life Cocoon on the tank if he's low. 
   { 'Life Cocoon', { 'modifier.cooldowns', 'tank.health < 10' }, 'tank' },
 
--- Mana
-{ "Mana Tea", { "player.gly​ph(123763).e​xists", "player.buf​f(Mana Tea).count >= 12", "player.man​a > 10", }},
-{ "Mana Tea", "player.mana < 10" },
-
-
-
-  -- Detox if needed. 
-  { '!Detox', { 'player.buff(Gift of the Titans)', '@coreHealing.needsDispelled("Mark of Arrogance")' }, nil },
-  -- { '!Detox', { '@coreHealing.needsDispelled("Displaced Energy")', 'z_z work to do' }, nil },
-  { '!Detox', '@coreHealing.needsDispelled("Shadow Word: Bane")', nil },
-  { '!Detox', '@coreHealing.needsDispelled("Corrosive Blood")', nil },
-  { '!Detox', '@coreHealing.needsDispelled("Harden Flesh")', nil },
-  { '!Detox', '@coreHealing.needsDispelled("Torment")', nil },
-  { '!Detox', '@coreHealing.needsDispelled("Breath of Fire")', nil },
-  { '!Detox', '@coreHealing.needsDispelled("Aqua Bomb")', nil },
-  { '!Detox', { 'toggle.detox', '@mistweaver.detox()' }, nil },
-
-  
+{{
+--Dispell
+  { "Detox", "@coreHealing.needsDispelled('Aqua Bomb')" },
+--SoO Dispells 
+  { "Detox", "@coreHealing.needsDispelled('Shadow Word: Bane')" },
+  { "Detox", "@coreHealing.needsDispelled('Lingering Corruption')" },
+  { "Detox", { "player.buff(Power of the Titans)", "@coreHealing.needsDispelled('Mark of Arrogance')", }}, 
+  { "Detox", "@coreHealing.needsDispelled('Corrosive Blood')" },
+  }, "toggle.detox" },
   
 --Healing Logic
-{ "Renewing Mist", "@coreHealing.needsHealing (99, 1)", nil },
-{ "Surging Mist", { "@coreHealing.needsHealing(95, 1)", "player.buff(Vital Mists).count = 5" }},
-{ "Renewing Mist", "target.role(tank).health <= 100" },
-{ 'Renewing Mist', '@coreHealing.needsHealing(85, 3)', nil },
-{ 'Revival', { 'modifier.cooldowns', '@coreHealing.needsHealing(50, 15)' }, nil },
-{ 'Uplift', { 'player.chi >= 2', '@mistweaver.uplift(90000)' }, nil },
-{ 'Uplift', { 'player.chi >= 5', '@mistweaver.uplift(60000)' }, nil },
-{ 'Uplift', { 'player.chi >= 2', '@coreHealing.needsHealing(85, 3)' }, nil },
-{ 'Spinning Crane Kick', { 'modifier.multitarget', 'player.mana > 55', 'player.chi < 4', '@mistweaver.spinningCraneKick(3)' }, nil },
+{ "Renewing Mist", { "lowest.health <= 99", "!lowest.buff(Renewing Mist)" }, "lowest" },
+{ "Surging Mist", { "lowest.health < 97", "player.buff(Vital Mists).count = 5" }, "lowest" },
+{ "Renewing Mist", "focus.health <= 100", "focus" },
+{ 'Renewing Mist', '@coreHealing.needsHealing(85, 3)', "lowest" },
+{ 'Revival', { 'modifier.cooldowns', '@coreHealing.needsHealing(50, 15)' }, "lowest" },
+{ 'Uplift', { 'player.chi >= 2', '@coreHealing.needsHealing(90, 3)', 'lowest.buff(Renewing Mist)' }, 'lowest' },
+{ 'Uplift', { 'player.chi >= 5', '@coreHealing.needsHealing(93, 3)', 'lowest.buff(Renewing Mist)' }, "lowest" },
+{ 'Spinning Crane Kick', { 'modifier.multitarget', 'player.mana > 55', 'player.chi < 4', '@coreHealing.needsHealing(93, 3)', 'lowest.range < 10' }},
 
-{ 'Zen Sphere', "target.role(tank).health < 85" },
-{ 'Chi Burst', "target.role(tank).health < 85" },
+{ 'Zen Sphere', "focus.health < 85" },
+{ 'Chi Burst', "focus.health < 85" },
 { "Chi Brew", "player.chi < 2" },
 { "Chi Wave" },
 
@@ -114,22 +118,25 @@ ProbablyEngine.rotation.register_custom(270, "Koha's Mist", {
 
 --FistWeaving
 {{
-{ "Mana Tea", { "player.buff(Mana Tea).count >= 2", "player.mana < 80", }},
+{ "Mana Tea", { "player.buff(Mana Tea).count >= 2", "player.mana < 60", }},
 { "Surging Mist", "player.buff(Vital Mists).count = 5" },
-{ "Tiger Palm", { "player.buff(Muscle Memory)", "player.chi >= 2" }},
-{ "Blackout Kick", { "!player.buff(Serpent's Zeal)", "player.chi > 2" }},
+{ "Blackout Kick", { "!player.buff(Serpent's Zeal)", "player.chi > 2", "player.buff(Muscle Memory)" }},
+{ "Blackout Kick", "player.chi >= 4" },
 { "Blackout Kick", { "player.buff(Muscle Memory)", "player.chi >= 3" }},
 { "Blackout Kick", { "player.chi >= 2", "modifier.enemies > 2" }},
-{ "Tiger Palm", "player.chi >= 3" },
-{ "Expel Harm" },
-{ "Jab" },
+{ "Tiger Palm", { "player.buff(Muscle Memory)", "player.chi >= 1" }},
+{ "Jab", { "!player.buff(Muscle Memory)", "player.chi <= 5" }},
 }, "toggle.fistweaving" },
 
 -- Mist Weaving
+{{
+{{
 { "Mana Tea", { "player.buff(Mana Tea).count >= 2", "player.mana < 50", }},
-{ 'Surging Mist', { '!player.moving', 'player.casting(Soothing Mist)', 'player.chi < 5', '@mistweaver.soothingTarget(60)' }, nil}, -- 0.3
-{ 'Enveloping Mist', { '!player.moving', 'player.casting(Soothing Mist)', 'player.chi >= 3', '!focus.buff(Enveloping Mist)', '@mistweaver.soothingTarget(85)' }, nil},
-{ 'Soothing Mist', { '!player.moving', '@mistweaver.soothingMist(90, 95, 65)' }, nil },
+{ 'Surging Mist', { '!player.moving', 'player.casting(Soothing Mist)', 'player.chi < 5', '@coreHealing.needsHealing(60, 1)' }, 'lowest'}, -- 0.3
+{ 'Enveloping Mist', { '!player.moving', 'player.casting(Soothing Mist)', 'player.chi >= 3', '!focus.buff(Enveloping Mist)', '@coreHealing.needsHealing(85, 1)' }, 'lowest'},
+{ 'Soothing Mist', { '!player.moving', '@coreHealing.needsHealing(93, 1)' }, 'lowest' },
+}, "!toggle.fistweaving" }, 
+}, "!toggle.lightningweaving" },
 -- Out Of Combat
 },
 {
